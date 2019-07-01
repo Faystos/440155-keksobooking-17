@@ -21,7 +21,7 @@ for (var i = 0; i <= 7; i++) {
   var prefixZeroImg = i < 9 ? 0 : '';
   var imgList = 'img/avatars/user' + prefixZeroImg + (i + 1) + '.png';
   var listType = listTypes[getRandomInt(0, 3)];
-  var mapLocationX = getRandomInt(0 + DIMENSIONS_IMG/2, mapWight - DIMENSIONS_IMG/2);
+  var mapLocationX = getRandomInt(0 + DIMENSIONS_IMG / 2, mapWight - DIMENSIONS_IMG / 2);
   var mapLocationY = getRandomInt(130, 630);
 
   var author = {
