@@ -56,7 +56,7 @@ for (i = 0; i <= 7; i++) {
   pinImg.src = listResidentialObjects[i].author.avatar;
   pinImg.width = DIMENSIONS_IMG;
   pinImg.height = DIMENSIONS_IMG;
-  pinImg.alt = 'заголовок объявления'
+  pinImg.alt = 'заголовок объявления';
   pin.appendChild(pinImg);
   fragObjPin.appendChild(pin);
 }
