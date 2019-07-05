@@ -7,12 +7,6 @@ var buttonMain = document.querySelector('.map__pin--main');
 var adressInp = document.querySelector('#address');
 var DIMENSIONS_IMG = 40;
 
-// Кординаты главной метки
-var buttonMainСoordinate = buttonMain.getBoundingClientRect();
-adressInp.value = buttonMainСoordinate.left + ', ' + buttonMainСoordinate.top;
-// *************************
-
-
 // Генерация элементов на карте (pin)
 var listResidentialObjects = [];
 var listTypes = [
@@ -87,3 +81,19 @@ buttonMain.addEventListener('click', onButtonMainClick);
 
 
 // *************************************************************
+
+// Кординаты главной метки
+
+var getCoords = function (elem) { // кроме IE8-
+  var box = elem.getBoundingClientRect();
+
+  return {
+    top: box.top + pageYOffset,
+    left: box.left + pageXOffset
+  };
+
+};
+
+var buttonMainСoordinate = getCoords(buttonMain);
+adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
+// *************************
