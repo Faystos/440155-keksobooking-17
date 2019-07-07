@@ -7,6 +7,10 @@ var buttonMain = document.querySelector('.map__pin--main');
 var adressInp = document.querySelector('#address');
 var DIMENSIONS_IMG = 40;
 
+var selectType = document.querySelector('#type');
+var priceType = document.querySelector('#price');
+var optionType = selectType.querySelectorAll('option');
+
 // Генерация элементов на карте (pin)
 var listResidentialObjects = [];
 var listTypes = [
@@ -97,3 +101,63 @@ var getCoords = function (elem) { // кроме IE8-
 var buttonMainСoordinate = getCoords(buttonMain);
 adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
 // *************************
+
+// Валидация формы
+var prices = [1, 1000, 5000, 10000];
+var typeObjs = [];
+
+
+for (i = 0; i < selectType.length; i++) {
+  var objType = selectType[i].value;
+  var minPrice = prices[i];
+
+  var typesHousings = {
+    'Housings': objType
+  };
+
+  var typesMinPrices = {
+    'Prices': minPrice
+  };
+
+  var listObjType = {
+    'objTypes': typesHousings,
+    'minPrices': typesMinPrices
+  };
+
+  typeObjs.push(listObjType);
+}
+console.log(typeObjs);
+
+
+
+// for (i = 0; i < typeObjs.length; i++) {
+//   if (optionType.value = typeObjs.objTypes[i]) {
+//     priceType.min = typeObjs[i].minPrices;
+//     priceType.placeholder = typeObjs[i].minPrices;
+//   }
+//
+//   console.log(priceType.min);
+// }
+
+
+
+// if (optionType.value = 'bungalo') {
+//   priceType.min = 0;
+//   priceType.placeholder = 0;
+// }
+// if (optionType.value = 'flat') {
+//   priceType.min = 1000;
+//   priceType.placeholder = 1000;
+// }
+// if (optionType.value = 'house') {
+//   priceType.min = 5000;
+//   priceType.placeholder = 5000;
+// }
+// if (optionType.value = 'palace') {
+//   priceType.min = 10000;
+//   priceType.placeholder = 10000;
+// }
+
+
+
+// ************************************************************************
