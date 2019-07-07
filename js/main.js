@@ -9,7 +9,10 @@ var DIMENSIONS_IMG = 40;
 
 var selectType = document.querySelector('#type');
 var priceType = document.querySelector('#price');
-var optionType = selectType.querySelectorAll('option');
+
+var selectTimeIn = document.querySelector('#timein');
+var selectTimeOut = document.querySelector('#timeout');
+
 
 // Генерация элементов на карте (pin)
 var listResidentialObjects = [];
@@ -102,62 +105,54 @@ var buttonMainСoordinate = getCoords(buttonMain);
 adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
 // *************************
 
-// Валидация формы
-var prices = [1, 1000, 5000, 10000];
-var typeObjs = [];
+// Валидация формы Поле «Тип жилья»
 
+// Рабочий вариан через условия №1
+/* selectType.addEventListener('change', function () {
+  if (this.value == 'bungalo') {
+    priceType.min = 0;
+    priceType.placeholder = 0;
+  }
+  if (this.value == 'flat') {
+    priceType.min = 1000;
+    priceType.placeholder = 1000;
+  }
+  if (this.value == 'house') {
+    priceType.min = 5000;
+    priceType.placeholder = 5000;
+  }
+  if (this.value == 'palace') {
+    priceType.min = 10000;
+    priceType.placeholder = 10000;
+  }
 
-for (i = 0; i < selectType.length; i++) {
-  var objType = selectType[i].value;
-  var minPrice = prices[i];
+}); */
 
-  var typesHousings = {
-    'Housings': objType
-  };
+// **************************************
+// // Рабочий вариан через условия №2
+var prices = [0, 1000, 5000, 10000];
 
-  var typesMinPrices = {
-    'Prices': minPrice
-  };
+var validSelectTypeHous = function () {
+  for (i = 0; i < selectType.options.length; i++) {
+    if (selectType.value === selectType.options[i].value) {
+      priceType.min = prices[i];
+      priceType.placeholder = prices[i];
+    }
 
-  var listObjType = {
-    'objTypes': typesHousings,
-    'minPrices': typesMinPrices
-  };
+  }
 
-  typeObjs.push(listObjType);
-}
-console.log(typeObjs);
+};
+selectType.addEventListener('change', validSelectTypeHous);
+// ******************************************
 
+// ************************************************************************
 
-
-// for (i = 0; i < typeObjs.length; i++) {
-//   if (optionType.value = typeObjs.objTypes[i]) {
-//     priceType.min = typeObjs[i].minPrices;
-//     priceType.placeholder = typeObjs[i].minPrices;
-//   }
-//
-//   console.log(priceType.min);
-// }
-
-
-
-// if (optionType.value = 'bungalo') {
-//   priceType.min = 0;
-//   priceType.placeholder = 0;
-// }
-// if (optionType.value = 'flat') {
-//   priceType.min = 1000;
-//   priceType.placeholder = 1000;
-// }
-// if (optionType.value = 'house') {
-//   priceType.min = 5000;
-//   priceType.placeholder = 5000;
-// }
-// if (optionType.value = 'palace') {
-//   priceType.min = 10000;
-//   priceType.placeholder = 10000;
-// }
-
-
+// Валидация формы Поля «Время заезда», «Время выезда».
+selectTimeIn.onchange = function () {
+  selectTimeOut.selectedIndex = this.selectedIndex;
+};
+selectTimeOut.onchange = function () {
+  selectTimeIn.selectedIndex = this.selectedIndex;
+};
 
 // ************************************************************************
