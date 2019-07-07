@@ -1,10 +1,13 @@
 'use strict';
-var faded = document.querySelector('.map--faded');
+var fadedMap = document.querySelector('.map--faded');
+var fadedForm = document.querySelector('.ad-form--disabled');
 var mapWight = document.querySelector('.map').offsetWidth;
 var pins = document.querySelector('.map__pins');
-faded.classList.remove('map--faded');
+var buttonMain = document.querySelector('.map__pin--main');
+var adressInp = document.querySelector('#address');
 var DIMENSIONS_IMG = 40;
 
+// Генерация элементов на карте (pin)
 var listResidentialObjects = [];
 var listTypes = [
   'palace',
@@ -61,4 +64,36 @@ for (i = 0; i <= 7; i++) {
   fragObjPin.appendChild(pin);
 }
 
-pins.appendChild(fragObjPin);
+// pins.appendChild(fragObjPin);
+
+// **********************************************************************
+
+// Активация карты и меню формы
+
+var onButtonMainClick = function () {
+  fadedMap.classList.remove('map--faded');
+  fadedForm.classList.remove('ad-form--disabled');
+  pins.appendChild(fragObjPin);
+
+};
+
+buttonMain.addEventListener('click', onButtonMainClick);
+
+
+// *************************************************************
+
+// Кординаты главной метки
+
+var getCoords = function (elem) { // кроме IE8-
+  var box = elem.getBoundingClientRect();
+
+  return {
+    top: box.top + pageYOffset,
+    left: box.left + pageXOffset
+  };
+
+};
+
+var buttonMainСoordinate = getCoords(buttonMain);
+adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
+// *************************
