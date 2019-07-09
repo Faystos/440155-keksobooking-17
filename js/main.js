@@ -126,7 +126,7 @@ selectType.addEventListener('change', validSelectTypeHous); */
 // // Рабочий вариан через условия №2
 var prices = {
   bungalo: {
-    minPrice: 0,
+    min: 0,
     placeholder: 0
   },
   flat: {
@@ -143,17 +143,17 @@ var prices = {
   }
 };
 
-
 var validSelectTypeHous = function () {
   for (i = 0; i < selectType.options.length; i++) {
-console.log(prices[i].minPrice);
+
+
+
+
     // if (selectType.value === selectType.options[i].value) {
     //   priceType.min = prices[i].min;
     //   priceType.placeholder = prices[i].placeholder;
     // }
-
-  }
-
+    }
 };
 validSelectTypeHous();
 // selectType.addEventListener('change', validSelectTypeHous);
