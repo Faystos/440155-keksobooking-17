@@ -107,30 +107,9 @@ adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(but
 
 // Валидация формы Поле «Тип жилья»
 
+
 // Рабочий вариан через условия №1
-/* selectType.addEventListener('change', function () {
-  if (this.value == 'bungalo') {
-    priceType.min = 0;
-    priceType.placeholder = 0;
-  }
-  if (this.value == 'flat') {
-    priceType.min = 1000;
-    priceType.placeholder = 1000;
-  }
-  if (this.value == 'house') {
-    priceType.min = 5000;
-    priceType.placeholder = 5000;
-  }
-  if (this.value == 'palace') {
-    priceType.min = 10000;
-    priceType.placeholder = 10000;
-  }
-
-}); */
-
-// **************************************
-// // Рабочий вариан через условия №2
-var prices = [0, 1000, 5000, 10000];
+/* var prices = [0, 1000, 5000, 10000];
 
 var validSelectTypeHous = function () {
   for (i = 0; i < selectType.options.length; i++) {
@@ -142,8 +121,44 @@ var validSelectTypeHous = function () {
   }
 
 };
-selectType.addEventListener('change', validSelectTypeHous);
+selectType.addEventListener('change', validSelectTypeHous); */
 // ******************************************
+// // Рабочий вариан через условия №2
+var prices = {
+  bungalo: {
+    minPrice: 0,
+    placeholder: 0
+  },
+  flat: {
+    min: 1000,
+    placeholder: 1000
+  },
+  house: {
+    min: 5000,
+    placeholder: 5000
+  },
+  palace: {
+    min: 10000,
+    placeholder: 10000
+  }
+};
+
+
+var validSelectTypeHous = function () {
+  for (i = 0; i < selectType.options.length; i++) {
+console.log(prices[i].minPrice);
+    // if (selectType.value === selectType.options[i].value) {
+    //   priceType.min = prices[i].min;
+    //   priceType.placeholder = prices[i].placeholder;
+    // }
+
+  }
+
+};
+validSelectTypeHous();
+// selectType.addEventListener('change', validSelectTypeHous);
+
+// *************************************************
 
 // ************************************************************************
 
