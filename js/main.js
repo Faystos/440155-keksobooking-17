@@ -144,16 +144,9 @@ var prices = {
 };
 
 var validSelectTypeHous = function () {
-  for (i = 0; i < selectType.options.length; i++) {
 
 
 
-
-    // if (selectType.value === selectType.options[i].value) {
-    //   priceType.min = prices[i].min;
-    //   priceType.placeholder = prices[i].placeholder;
-    // }
-    }
 };
 validSelectTypeHous();
 // selectType.addEventListener('change', validSelectTypeHous);
