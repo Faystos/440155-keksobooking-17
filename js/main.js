@@ -73,7 +73,7 @@ for (i = 0; i <= 7; i++) {
 
 // pins.appendChild(fragObjPin);
 
-// **********************************************************************
+// ***************************************************************************
 
 // Активация карты и меню формы
 
@@ -87,7 +87,7 @@ var onButtonMainClick = function () {
 buttonMain.addEventListener('click', onButtonMainClick);
 
 
-// *************************************************************
+// ***************************************************************************
 
 // Кординаты главной метки
 
@@ -103,27 +103,10 @@ var getCoords = function (elem) { // кроме IE8-
 
 var buttonMainСoordinate = getCoords(buttonMain);
 adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
-// *************************
+// ***************************************************************************
 
-// Валидация формы Поле «Тип жилья»
+// Заполнаем паратры формы Поле «Тип жилья»
 
-
-// Рабочий вариан через условия №1
-/* var prices = [0, 1000, 5000, 10000];
-
-var validSelectTypeHous = function () {
-  for (i = 0; i < selectType.options.length; i++) {
-    if (selectType.value === selectType.options[i].value) {
-      priceType.min = prices[i];
-      priceType.placeholder = prices[i];
-    }
-
-  }
-
-};
-selectType.addEventListener('change', validSelectTypeHous); */
-// ******************************************
-// // Рабочий вариан через условия №2
 var prices = {
   bungalo: {
     min: 0,
@@ -143,16 +126,15 @@ var prices = {
   }
 };
 
-var validSelectTypeHous = function () {
-
-
-
+var ondSelectTypeHous = function (event) {
+  var selectHouseType = event.currentTarget.value;
+  var minPrice = prices[selectHouseType].min;
+  var placeholderSelectType = prices[selectHouseType].placeholder;
+  priceType.setAttribute('min', minPrice);
+  priceType.setAttribute('placeholder', placeholderSelectType);
 };
-validSelectTypeHous();
-// selectType.addEventListener('change', validSelectTypeHous);
 
-// *************************************************
-
+selectType.addEventListener('change', ondSelectTypeHous);
 // ************************************************************************
 
 // Валидация формы Поля «Время заезда», «Время выезда».
