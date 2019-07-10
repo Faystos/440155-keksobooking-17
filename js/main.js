@@ -7,6 +7,13 @@ var buttonMain = document.querySelector('.map__pin--main');
 var adressInp = document.querySelector('#address');
 var DIMENSIONS_IMG = 40;
 
+var selectType = document.querySelector('#type');
+var priceType = document.querySelector('#price');
+
+var selectTimeIn = document.querySelector('#timein');
+var selectTimeOut = document.querySelector('#timeout');
+
+
 // Генерация элементов на карте (pin)
 var listResidentialObjects = [];
 var listTypes = [
@@ -66,7 +73,7 @@ for (i = 0; i <= 7; i++) {
 
 // pins.appendChild(fragObjPin);
 
-// **********************************************************************
+// ***************************************************************************
 
 // Активация карты и меню формы
 
@@ -80,7 +87,7 @@ var onButtonMainClick = function () {
 buttonMain.addEventListener('click', onButtonMainClick);
 
 
-// *************************************************************
+// ***************************************************************************
 
 // Кординаты главной метки
 
@@ -96,4 +103,46 @@ var getCoords = function (elem) { // кроме IE8-
 
 var buttonMainСoordinate = getCoords(buttonMain);
 adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
-// *************************
+// ***************************************************************************
+
+// Заполнаем паратры формы Поле «Тип жилья»
+
+var prices = {
+  bungalo: {
+    min: 0,
+    placeholder: 0
+  },
+  flat: {
+    min: 1000,
+    placeholder: 1000
+  },
+  house: {
+    min: 5000,
+    placeholder: 5000
+  },
+  palace: {
+    min: 10000,
+    placeholder: 10000
+  }
+};
+
+var ondSelectTypeHous = function (event) {
+  var selectHouseType = event.currentTarget.value;
+  var minPrice = prices[selectHouseType].min;
+  var placeholderSelectType = prices[selectHouseType].placeholder;
+  priceType.setAttribute('min', minPrice);
+  priceType.setAttribute('placeholder', placeholderSelectType);
+};
+
+selectType.addEventListener('change', ondSelectTypeHous);
+// ************************************************************************
+
+// Валидация формы Поля «Время заезда», «Время выезда».
+selectTimeIn.onchange = function () {
+  selectTimeOut.selectedIndex = this.selectedIndex;
+};
+selectTimeOut.onchange = function () {
+  selectTimeIn.selectedIndex = this.selectedIndex;
+};
+
+// ************************************************************************
