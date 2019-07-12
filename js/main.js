@@ -1,4 +1,5 @@
 'use strict';
+var map = document.querySelector('.map');
 var fadedMap = document.querySelector('.map--faded');
 var fadedForm = document.querySelector('.ad-form--disabled');
 var mapWight = document.querySelector('.map').offsetWidth;
@@ -84,7 +85,7 @@ var onButtonMainClick = function () {
 
 };
 
-buttonMain.addEventListener('click', onButtonMainClick);
+// buttonMain.addEventListener('click', onButtonMainClick);
 
 
 // ***************************************************************************
@@ -146,3 +147,45 @@ selectTimeOut.onchange = function () {
 };
 
 // ************************************************************************
+
+// Заставляем метку двигаться
+buttonMain.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  // var dragged = true;
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    buttonMain.style.top = (buttonMain.offsetTop - shift.y) + 'px';
+    buttonMain.style.left = (buttonMain.offsetLeft - shift.x) + 'px';
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    buttonMain.removeEventListener('mousemove', onMouseMove);
+    buttonMain.removeEventListener('mouseup', onMouseUp);
+
+  };
+  buttonMain.addEventListener('mousemove', onMouseMove);
+  buttonMain.addEventListener('mouseup', onMouseUp);
+});
+
+
+// *************************************************************************
