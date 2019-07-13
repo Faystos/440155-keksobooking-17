@@ -85,25 +85,39 @@ var onButtonMainClick = function () {
 
 };
 
-// buttonMain.addEventListener('click', onButtonMainClick);
+buttonMain.addEventListener('click', onButtonMainClick);
 
 
 // ***************************************************************************
 
 // Кординаты главной метки
 
-var getCoords = function (elem) { // кроме IE8-
-  var box = elem.getBoundingClientRect();
+// var getCoords = function (elem) { // кроме IE8-
+//   var box = elem.getBoundingClientRect();
+//
+//   return {
+//     top: box.top + pageYOffset,
+//     left: box.left + pageXOffset
+//   };
+//
+// };
+//
+// var buttonMainСoordinate = getCoords(buttonMain);
+// adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
+// **************           *******************
 
-  return {
-    top: box.top + pageYOffset,
-    left: box.left + pageXOffset
-  };
 
+var getCoords = function () {
+
+  var posX = buttonMain.offsetTop;
+  var posY = buttonMain.offsetLeft;
+
+  adressInp.value = posX + ',' + posY;
+  console.log(posX + ',' + posY);
 };
 
-var buttonMainСoordinate = getCoords(buttonMain);
-adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
+getCoords(buttonMain);
+
 // ***************************************************************************
 
 // Заполнаем паратры формы Поле «Тип жилья»
@@ -149,6 +163,41 @@ selectTimeOut.onchange = function () {
 // ************************************************************************
 
 // Заставляем метку двигаться
+/*
+var mapLimits = {
+  top: map.offsetTop,
+  right: map.offsetWidth + map.offsetLeft - buttonMain.offsetWidth,
+  bottom: map.offsetHeight + map.offsetTop - buttonMain.offsetHeight,
+  left: map.offsetLeft
+};
+console.log(mapLimits);
+
+var move = function (e) {
+  var newLocation = {
+    x: mapLimits.left,
+    y: mapLimits.top
+  };
+
+  if (e.pageX > mapLimits.right) {
+    newLocation.x = mapLimits.right;
+  } else if (e.pageX > mapLimits.left) {
+    newLocation.x = e.pageX;
+  }
+  if (e.pageY > mapLimits.bottom) {
+    newLocation.y = mapLimits.bottom;
+  } else if (e.pageY > mapLimits.top) {
+    newLocation.y = e.pageY;
+  }
+  relocate(newLocation);
+};
+
+var relocate = function (newLocation) {
+  buttonMain.style.left = newLocation.x + 'px';
+  buttonMain.style.top = newLocation.y + 'px';
+};
+*/
+
+
 buttonMain.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
 
@@ -157,11 +206,11 @@ buttonMain.addEventListener('mousedown', function (evt) {
     y: evt.clientY
   };
 
-  // var dragged = true;
+  var dragged = false;
 
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
-
+    // ***********************************************
     var shift = {
       x: startCoords.x - moveEvt.clientX,
       y: startCoords.y - moveEvt.clientY
@@ -171,21 +220,43 @@ buttonMain.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
+    // ******************* ******************************
+
+    if (buttonMain.x > map.x) {
+      buttonMain.x = map.x;
+    }
+    if (buttonMain.y > map.y) {
+      buttonMain.y = map.y;
+    }
+
+
+    // if (dragged) {
+    //   move(buttonMain);
+    // }
 
     buttonMain.style.top = (buttonMain.offsetTop - shift.y) + 'px';
     buttonMain.style.left = (buttonMain.offsetLeft - shift.x) + 'px';
+
   };
 
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
+    getCoords(buttonMain);
 
-    buttonMain.removeEventListener('mousemove', onMouseMove);
-    buttonMain.removeEventListener('mouseup', onMouseUp);
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+
+    if (dragged) {
+      var onClickPreventDefault = function (evt) {
+        evt.preventDefault();
+        buttonMain.removeEventListener('click', onClickPreventDefault)
+      };
+      buttonMain.addEventListener('click', onClickPreventDefault);
+    }
 
   };
-  buttonMain.addEventListener('mousemove', onMouseMove);
-  buttonMain.addEventListener('mouseup', onMouseUp);
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
-
 
 // *************************************************************************
