@@ -6,6 +6,7 @@ var mapWight = document.querySelector('.map').offsetWidth;
 var pins = document.querySelector('.map__pins');
 var buttonMain = document.querySelector('.map__pin--main');
 var adressInp = document.querySelector('#address');
+var mapOverlay = document.querySelector('.map__overlay');
 var DIMENSIONS_IMG = 40;
 
 var selectType = document.querySelector('#type');
@@ -163,40 +164,6 @@ selectTimeOut.onchange = function () {
 // ************************************************************************
 
 // Заставляем метку двигаться
-/*
-var mapLimits = {
-  top: map.offsetTop,
-  right: map.offsetWidth + map.offsetLeft - buttonMain.offsetWidth,
-  bottom: map.offsetHeight + map.offsetTop - buttonMain.offsetHeight,
-  left: map.offsetLeft
-};
-console.log(mapLimits);
-
-var move = function (e) {
-  var newLocation = {
-    x: mapLimits.left,
-    y: mapLimits.top
-  };
-
-  if (e.pageX > mapLimits.right) {
-    newLocation.x = mapLimits.right;
-  } else if (e.pageX > mapLimits.left) {
-    newLocation.x = e.pageX;
-  }
-  if (e.pageY > mapLimits.bottom) {
-    newLocation.y = mapLimits.bottom;
-  } else if (e.pageY > mapLimits.top) {
-    newLocation.y = e.pageY;
-  }
-  relocate(newLocation);
-};
-
-var relocate = function (newLocation) {
-  buttonMain.style.left = newLocation.x + 'px';
-  buttonMain.style.top = newLocation.y + 'px';
-};
-*/
-
 
 buttonMain.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
@@ -222,20 +189,24 @@ buttonMain.addEventListener('mousedown', function (evt) {
     };
     // ******************* ******************************
 
-    if (buttonMain.x > map.x) {
-      buttonMain.x = map.x;
-    }
-    if (buttonMain.y > map.y) {
-      buttonMain.y = map.y;
-    }
+      var newBlockX = buttonMain.offsetLeft - shift.x;
+      var newBlockY = buttonMain.offsetTop - shift.y;
+    
 
+      if (nawBlockX < mapOverlay.offsetLeft ||
+      nawBlockY < mapOverlay.offsetTop ||
+      nawBlockX + buttonMain.offsetWidth >  mapOverlay.offsetLeft + mapOverlay.offsetWidth ||
+      nawBlockY + buttonMain.offsetHeight > mapOverlay.offsetTop + mapOverlay.offsetHeight) {
+        console.log('stop');
+        return
+      } else {
+        buttonMain.style.top = nawBlockY + 'px';
+        buttonMain.style.left = nawBlockX + 'px';
+      }
 
-    // if (dragged) {
-    //   move(buttonMain);
-    // }
-
-    buttonMain.style.top = (buttonMain.offsetTop - shift.y) + 'px';
-    buttonMain.style.left = (buttonMain.offsetLeft - shift.x) + 'px';
+   // ***************************************************
+    // buttonMain.style.top = nawBlockY + 'px';
+    // buttonMain.style.left = nawBlockX + 'px';
 
   };
 
