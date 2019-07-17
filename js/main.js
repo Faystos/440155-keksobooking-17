@@ -92,21 +92,6 @@ buttonMain.addEventListener('click', onButtonMainClick);
 
 // Кординаты главной метки
 
-// var getCoords = function (elem) { // кроме IE8-
-//   var box = elem.getBoundingClientRect();
-//
-//   return {
-//     top: box.top + pageYOffset,
-//     left: box.left + pageXOffset
-//   };
-//
-// };
-//
-// var buttonMainСoordinate = getCoords(buttonMain);
-// adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
-// **************           *******************
-
-
 var getCoords = function () {
 
   var posX = buttonMain.offsetTop + (buttonMain.offsetHeight / 2);
