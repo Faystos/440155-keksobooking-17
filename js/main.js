@@ -1,10 +1,12 @@
 'use strict';
+// var map = document.querySelector('.map');
 var fadedMap = document.querySelector('.map--faded');
 var fadedForm = document.querySelector('.ad-form--disabled');
 var mapWight = document.querySelector('.map').offsetWidth;
 var pins = document.querySelector('.map__pins');
 var buttonMain = document.querySelector('.map__pin--main');
 var adressInp = document.querySelector('#address');
+var mapOverlay = document.querySelector('.map__overlay');
 var DIMENSIONS_IMG = 40;
 
 var selectType = document.querySelector('#type');
@@ -15,6 +17,7 @@ var selectTimeOut = document.querySelector('#timeout');
 
 
 // Генерация элементов на карте (pin)
+
 var listResidentialObjects = [];
 var listTypes = [
   'palace',
@@ -71,8 +74,6 @@ for (i = 0; i <= 7; i++) {
   fragObjPin.appendChild(pin);
 }
 
-// pins.appendChild(fragObjPin);
-
 // ***************************************************************************
 
 // Активация карты и меню формы
@@ -91,18 +92,16 @@ buttonMain.addEventListener('click', onButtonMainClick);
 
 // Кординаты главной метки
 
-var getCoords = function (elem) { // кроме IE8-
-  var box = elem.getBoundingClientRect();
+var getCoords = function () {
 
-  return {
-    top: box.top + pageYOffset,
-    left: box.left + pageXOffset
-  };
+  var posX = buttonMain.offsetTop + (buttonMain.offsetHeight / 2);
+  var posY = buttonMain.offsetLeft + (buttonMain.offsetWidth / 2);
 
+  adressInp.value = posX + ',' + posY;
 };
 
-var buttonMainСoordinate = getCoords(buttonMain);
-adressInp.value = Math.round(buttonMainСoordinate.left) + ', ' + Math.round(buttonMainСoordinate.top);
+getCoords(buttonMain);
+
 // ***************************************************************************
 
 // Заполнаем паратры формы Поле «Тип жилья»
@@ -146,3 +145,70 @@ selectTimeOut.onchange = function () {
 };
 
 // ************************************************************************
+
+// Заставляем метку двигаться
+
+var onMouseDown = function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+  var dragged = false;
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    var newBlockX = buttonMain.offsetLeft - shift.x;
+    var newBlockY = buttonMain.offsetTop - shift.y;
+
+    if (newBlockX < mapOverlay.offsetLeft - buttonMain.offsetWidth / 2 ||
+    newBlockY < mapOverlay.offsetTop ||
+    newBlockX + buttonMain.offsetWidth > mapOverlay.offsetLeft + mapOverlay.offsetWidth + (buttonMain.offsetWidth / 2) ||
+    newBlockY + buttonMain.offsetHeight > mapOverlay.offsetTop + mapOverlay.offsetHeight + (buttonMain.offsetHeight / 2)) {
+
+      document.removeEventListener('mousemove', onMouseMove);
+
+    } else {
+      buttonMain.style.top = newBlockY + 'px';
+      buttonMain.style.left = newBlockX + 'px';
+    }
+
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    getCoords(buttonMain);
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+
+    if (dragged) {
+      var onClickPreventDefault = function () {
+        buttonMain.preventDefault();
+        buttonMain.removeEventListener('click', onClickPreventDefault);
+      };
+      buttonMain.addEventListener('click', onClickPreventDefault);
+    }
+
+  };
+
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+};
+
+buttonMain.addEventListener('mousedown', onMouseDown);
+
+// *************************************************************************
