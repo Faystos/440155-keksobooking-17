@@ -1,5 +1,5 @@
 'use strict';
-var map = document.querySelector('.map');
+// var map = document.querySelector('.map');
 var fadedMap = document.querySelector('.map--faded');
 var fadedForm = document.querySelector('.ad-form--disabled');
 var mapWight = document.querySelector('.map').offsetWidth;
@@ -17,6 +17,7 @@ var selectTimeOut = document.querySelector('#timeout');
 
 
 // Генерация элементов на карте (pin)
+
 var listResidentialObjects = [];
 var listTypes = [
   'palace',
@@ -73,8 +74,6 @@ for (i = 0; i <= 7; i++) {
   fragObjPin.appendChild(pin);
 }
 
-// pins.appendChild(fragObjPin);
-
 // ***************************************************************************
 
 // Активация карты и меню формы
@@ -110,11 +109,10 @@ buttonMain.addEventListener('click', onButtonMainClick);
 
 var getCoords = function () {
 
-  var posX = buttonMain.offsetTop;
-  var posY = buttonMain.offsetLeft;
+  var posX = buttonMain.offsetTop + (buttonMain.offsetHeight / 2);
+  var posY = buttonMain.offsetLeft + (buttonMain.offsetWidth / 2);
 
   adressInp.value = posX + ',' + posY;
-  console.log(posX + ',' + posY);
 };
 
 getCoords(buttonMain);
@@ -165,19 +163,18 @@ selectTimeOut.onchange = function () {
 
 // Заставляем метку двигаться
 
-buttonMain.addEventListener('mousedown', function (evt) {
+var onMouseDown = function (evt) {
   evt.preventDefault();
 
   var startCoords = {
     x: evt.clientX,
     y: evt.clientY
   };
-
   var dragged = false;
 
   var onMouseMove = function (moveEvt) {
     moveEvt.preventDefault();
-    // ***********************************************
+
     var shift = {
       x: startCoords.x - moveEvt.clientX,
       y: startCoords.y - moveEvt.clientY
@@ -187,26 +184,21 @@ buttonMain.addEventListener('mousedown', function (evt) {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
-    // ******************* ******************************
 
-      var newBlockX = buttonMain.offsetLeft - shift.x;
-      var newBlockY = buttonMain.offsetTop - shift.y;
-    
+    var newBlockX = buttonMain.offsetLeft - shift.x;
+    var newBlockY = buttonMain.offsetTop - shift.y;
 
-      if (nawBlockX < mapOverlay.offsetLeft ||
-      nawBlockY < mapOverlay.offsetTop ||
-      nawBlockX + buttonMain.offsetWidth >  mapOverlay.offsetLeft + mapOverlay.offsetWidth ||
-      nawBlockY + buttonMain.offsetHeight > mapOverlay.offsetTop + mapOverlay.offsetHeight) {
-        console.log('stop');
-        return
-      } else {
-        buttonMain.style.top = nawBlockY + 'px';
-        buttonMain.style.left = nawBlockX + 'px';
-      }
+    if (newBlockX < mapOverlay.offsetLeft - buttonMain.offsetWidth / 2 ||
+    newBlockY < mapOverlay.offsetTop ||
+    newBlockX + buttonMain.offsetWidth > mapOverlay.offsetLeft + mapOverlay.offsetWidth + (buttonMain.offsetWidth / 2) ||
+    newBlockY + buttonMain.offsetHeight > mapOverlay.offsetTop + mapOverlay.offsetHeight + (buttonMain.offsetHeight / 2)) {
 
-   // ***************************************************
-    // buttonMain.style.top = nawBlockY + 'px';
-    // buttonMain.style.left = nawBlockX + 'px';
+      document.removeEventListener('mousemove', onMouseMove);
+
+    } else {
+      buttonMain.style.top = newBlockY + 'px';
+      buttonMain.style.left = newBlockX + 'px';
+    }
 
   };
 
@@ -218,16 +210,20 @@ buttonMain.addEventListener('mousedown', function (evt) {
     document.removeEventListener('mouseup', onMouseUp);
 
     if (dragged) {
-      var onClickPreventDefault = function (evt) {
-        evt.preventDefault();
-        buttonMain.removeEventListener('click', onClickPreventDefault)
+      var onClickPreventDefault = function () {
+        buttonMain.preventDefault();
+        buttonMain.removeEventListener('click', onClickPreventDefault);
       };
       buttonMain.addEventListener('click', onClickPreventDefault);
     }
 
   };
+
+
   document.addEventListener('mousemove', onMouseMove);
   document.addEventListener('mouseup', onMouseUp);
-});
+};
+
+buttonMain.addEventListener('mousedown', onMouseDown);
 
 // *************************************************************************
