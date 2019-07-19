@@ -8,10 +8,8 @@ var buttonMain = document.querySelector('.map__pin--main');
 var adressInp = document.querySelector('#address');
 var mapOverlay = document.querySelector('.map__overlay');
 var DIMENSIONS_IMG = 40;
-
 var selectType = document.querySelector('#type');
 var priceType = document.querySelector('#price');
-
 var selectTimeIn = document.querySelector('#timein');
 var selectTimeOut = document.querySelector('#timeout');
 
