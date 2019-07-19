@@ -1,6 +1,6 @@
 'use strict';
 
-(function(){
+(function () {
 
   var prices = {
     bungalo: {
@@ -30,4 +30,14 @@
   };
 
   window.data.selectType.addEventListener('change', ondSelectTypeHous);
+})();
+
+(function () {
+
+  window.data.selectTimeIn.onchange = function () {
+    window.data.selectTimeOut.selectedIndex = this.selectedIndex;
+  };
+  window.data.selectTimeOut.onchange = function () {
+    window.data.selectTimeIn.selectedIndex = this.selectedIndex;
+  };
 })();
