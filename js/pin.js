@@ -1,6 +1,6 @@
+'use strict';
 
-
-(function(){
+(function () {
 
   var onMouseDown = function (evt) {
     evt.preventDefault();
