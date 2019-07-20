@@ -124,11 +124,13 @@ var prices = {
 };
 
 var ondSelectTypeHous = function (event) {
+
   var selectHouseType = event.currentTarget.value;
   var minPrice = prices[selectHouseType].min;
   var placeholderSelectType = prices[selectHouseType].placeholder;
   priceType.setAttribute('min', minPrice);
   priceType.setAttribute('placeholder', placeholderSelectType);
+
 };
 
 selectType.addEventListener('change', ondSelectTypeHous);
@@ -143,7 +145,7 @@ selectTimeOut.onchange = function () {
 };
 
 // ************************************************************************
-
+/*
 // Заставляем метку двигаться
 
 var onMouseDown = function (evt) {
@@ -210,3 +212,4 @@ var onMouseDown = function (evt) {
 buttonMain.addEventListener('mousedown', onMouseDown);
 
 // *************************************************************************
+*/
