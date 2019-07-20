@@ -6,12 +6,10 @@ var mapWight = document.querySelector('.map').offsetWidth;
 var pins = document.querySelector('.map__pins');
 var buttonMain = document.querySelector('.map__pin--main');
 var adressInp = document.querySelector('#address');
-var mapOverlay = document.querySelector('.map__overlay');
+// var mapOverlay = document.querySelector('.map__overlay');
 var DIMENSIONS_IMG = 40;
-
 var selectType = document.querySelector('#type');
 var priceType = document.querySelector('#price');
-
 var selectTimeIn = document.querySelector('#timein');
 var selectTimeOut = document.querySelector('#timeout');
 
@@ -126,11 +124,13 @@ var prices = {
 };
 
 var ondSelectTypeHous = function (event) {
+
   var selectHouseType = event.currentTarget.value;
   var minPrice = prices[selectHouseType].min;
   var placeholderSelectType = prices[selectHouseType].placeholder;
   priceType.setAttribute('min', minPrice);
   priceType.setAttribute('placeholder', placeholderSelectType);
+
 };
 
 selectType.addEventListener('change', ondSelectTypeHous);
@@ -145,7 +145,7 @@ selectTimeOut.onchange = function () {
 };
 
 // ************************************************************************
-
+/*
 // Заставляем метку двигаться
 
 var onMouseDown = function (evt) {
@@ -212,3 +212,4 @@ var onMouseDown = function (evt) {
 buttonMain.addEventListener('mousedown', onMouseDown);
 
 // *************************************************************************
+*/
