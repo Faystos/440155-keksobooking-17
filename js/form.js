@@ -40,4 +40,11 @@
   window.data.selectTimeOut.onchange = function () {
     window.data.selectTimeIn.selectedIndex = this.selectedIndex;
   };
+
+// window.data.formaddEventListener('submit', function (evt) {
+//     window.upload(new FormData(form), function (response) {
+//
+//     });
+//     evt.preventDefault();
+//   });
 })();

@@ -3,6 +3,7 @@
 (function () {
   var fadedMap = document.querySelector('.map--faded');
   var fadedForm = document.querySelector('.ad-form--disabled');
+  var form = document.querySelector('.ad-form');
   var mapWight = document.querySelector('.map').offsetWidth;
   var pins = document.querySelector('.map__pins');
   var buttonMain = document.querySelector('.map__pin--main');
@@ -30,6 +31,7 @@
     priceType: priceType,
     selectTimeIn: selectTimeIn,
     selectTimeOut: selectTimeOut,
-    fragObjPin: fragObjPin
+    fragObjPin: fragObjPin,
+    form: form
   };
 })();
