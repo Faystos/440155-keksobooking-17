@@ -1,11 +1,6 @@
 'use strict';
 
 (function () {
-
-  var getRandomInt = function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
-
   var onSuccess = function (data) {
     for (var i = 0; i < data.length; i++) {
       var pin = document.createElement('button');
@@ -22,6 +17,12 @@
     }
   };
 
-  window.load(onSuccess);
+  var onError = function () {
+    var errorMessage = document.createElement('div');
+    errorMessage.appendChild(window.data.error.content.cloneNode(true));
+    window.data.mainBlock.appendChild(errorMessage);
+  };
 
+  window.load(window.data.URL, onSuccess, onError);
 })();
+// data.length

@@ -14,6 +14,9 @@
   var priceType = document.querySelector('#price');
   var selectTimeIn = document.querySelector('#timein');
   var selectTimeOut = document.querySelector('#timeout');
+  var URL = 'https://js.dump.academy/keksobooking/data';
+  var error = document.querySelector('#error');
+  var mainBlock = document.querySelector('main');
 
   var fragObjPin = document.createDocumentFragment();
 
@@ -32,6 +35,10 @@
     selectTimeIn: selectTimeIn,
     selectTimeOut: selectTimeOut,
     fragObjPin: fragObjPin,
-    form: form
+    form: form,
+    URL: URL,
+    error: error,
+    mainBlock: mainBlock
+
   };
 })();
