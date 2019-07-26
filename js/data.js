@@ -21,7 +21,6 @@
   var fragObjPin = document.createDocumentFragment();
 
   window.data = {
-
     fadedMap: fadedMap,
     fadedForm: fadedForm,
     mapWight: mapWight,
@@ -39,6 +38,5 @@
     URL: URL,
     error: error,
     mainBlock: mainBlock
-
   };
 })();

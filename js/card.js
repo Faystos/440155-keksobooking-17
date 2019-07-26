@@ -25,4 +25,3 @@
 
   window.load(window.data.URL, onSuccess, onError);
 })();
-// data.length
