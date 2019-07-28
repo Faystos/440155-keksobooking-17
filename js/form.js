@@ -33,7 +33,6 @@
 })();
 
 (function () {
-
   window.data.selectTimeIn.onchange = function () {
     window.data.selectTimeOut.selectedIndex = this.selectedIndex;
   };

@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var onMouseDown = function (evt) {
     evt.preventDefault();
 
@@ -38,7 +37,6 @@
         window.data.buttonMain.style.top = newBlockY + 'px';
         window.data.buttonMain.style.left = newBlockX + 'px';
       }
-
     };
 
     var onMouseUp = function (upEvt) {
@@ -56,14 +54,11 @@
         };
         window.data.buttonMain.addEventListener('click', onClickPreventDefault);
       }
-
     };
-
 
     window.document.addEventListener('mousemove', onMouseMove);
     window.document.addEventListener('mouseup', onMouseUp);
   };
 
   window.data.buttonMain.addEventListener('mousedown', onMouseDown);
-
 })();
