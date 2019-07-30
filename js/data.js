@@ -17,6 +17,8 @@
   var URL = 'https://js.dump.academy/keksobooking/data';
   var error = document.querySelector('#error');
   var mainBlock = document.querySelector('main');
+  var cards = [];
+  var housingType = document.querySelector('#housing-type');
 
   var fragObjPin = document.createDocumentFragment();
 
@@ -37,6 +39,8 @@
     form: form,
     URL: URL,
     error: error,
-    mainBlock: mainBlock
+    mainBlock: mainBlock,
+    cards: cards,
+    housingType: housingType
   };
 })();

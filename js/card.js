@@ -2,20 +2,33 @@
 
 (function () {
   var onSuccess = function (data) {
-    for (var i = 0; i < data.length; i++) {
-      var pin = document.createElement('button');
-      var pinImg = document.createElement('img');
-      pin.className = 'map__pin';
-      pinImg.src = data[i].author.avatar;
-      pinImg.width = window.data.DIMENSIONS_IMG;
-      pinImg.height = window.data.DIMENSIONS_IMG;
-      pinImg.alt = data[i].offer.title;
-      pin.style.left = data[i].location.x + 'px';
-      pin.style.top = data[i].location.y + 'px';
-      pin.appendChild(pinImg);
-      window.data.fragObjPin.appendChild(pin);
-    }
+    // window.data.cards = data;
+    // console.log(window.data.cards[0].offer.type);
+
+    // *****
+
+    window.data.housingType.addEventListener('change', function () {
+
+    });
+
+    var filterHouseType = function (type) {
+      var filteredData = []
+      for (var i = 0; i < data.length; i++) {
+        var item = data[i].offer.type;
+        if (type === 'any' || item.offer.type === type) {
+          filteredData.push(item);
+        }
+      }
+      console.log(filteredData);
+      return filteredData;
+    };
+
+    filterHouseType();
+
+
   };
+
+  // *************************************************************************
 
   var onError = function () {
     var errorMessage = document.createElement('div');
@@ -24,4 +37,11 @@
   };
 
   window.load(window.data.URL, onSuccess, onError);
+})();
+
+// фильтр
+
+(function () {
+
+// console.log(window.data.cards);
 })();

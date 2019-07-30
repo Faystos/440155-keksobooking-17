@@ -40,3 +40,15 @@
     window.data.selectTimeIn.selectedIndex = this.selectedIndex;
   };
 })();
+
+(function () {
+  // window.data.housingType.addEventListener('change', function () {
+  //   if (window.data.housingType.value = 'bungalo') {
+  //     window.houseTypeBungalo.forEach(function (item) {
+  //       window.renderCard(item);
+  //     });
+  //   }
+  //   // console.log(window.data.housingType.value);
+  // });
+// console.log(window.data.housingType.value);
+})();
