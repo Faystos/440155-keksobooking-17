@@ -2,29 +2,42 @@
 
 (function () {
   var onSuccess = function (data) {
-    // window.data.cards = data;
-    // console.log(window.data.cards[0].offer.type);
+    var cards = data;
 
-    // *****
 
-    window.data.housingType.addEventListener('change', function () {
+    window.data.housingType.addEventListener('change', handleSelectChange);
 
-    });
+    function handleSelectChange(event) {
+      var totalCards = (limitDataByNumber(filterDataByType(event.target.value), 5));
 
-    var filterHouseType = function (type) {
-      var filteredData = []
-      for (var i = 0; i < data.length; i++) {
-        var item = data[i].offer.type;
+      // window.renderCard(totalCards[0]);
+
+
+      console.log(totalCards);
+    }
+
+    function filterDataByType(type) {
+
+      var filteredData = [];
+      for (var i = 0; i < cards.length; i++) {
+        var item = cards[i];
         if (type === 'any' || item.offer.type === type) {
           filteredData.push(item);
         }
       }
-      console.log(filteredData);
       return filteredData;
-    };
+    }
 
-    filterHouseType();
-
+    function limitDataByNumber(totalCards, number) {
+      var limitedData = [];
+      for (var i = 0; i < number; i++) {
+        var item = totalCards[i];
+        if (item) {
+          limitedData.push(item);
+        }
+      }
+      return limitedData;
+    }
 
   };
 
