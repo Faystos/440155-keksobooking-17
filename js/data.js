@@ -19,9 +19,6 @@
   var mainBlock = document.querySelector('main');
   var cards = [];
   var housingType = document.querySelector('#housing-type');
-
-  var pinTemplate = document.querySelector('#pin');
-
   var fragObjPin = document.createDocumentFragment();
 
   window.data = {
@@ -43,7 +40,6 @@
     error: error,
     mainBlock: mainBlock,
     cards: cards,
-    housingType: housingType,
-    pinTemplate: pinTemplate
+    housingType: housingType
   };
 })();
