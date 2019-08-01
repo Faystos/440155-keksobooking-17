@@ -28,32 +28,22 @@
 
 // **********************************************************************
 
+// Загруска карточек и алгоритм фильтрации
+
 (function () {
 
   var onSuccess = function (data) {
 
+    window.data.housingType.addEventListener('change', window.handlerSelectChange);
 
-    window.data.housingType.addEventListener('change', handlerSelectChange);
-
-    // for (var i = 0; i < 5; i++) {
-    //   window.renderCards(data[i]);
-    // }
-
-    function handlerSelectChange(event) {
-      window.clearCards();
-
-      var totalCards = (limitDataByNumber(filterDataByType(event.target.value), 5));
-
-      for (var i = 0; i < totalCards.length; i++) {
-        window.renderCards(totalCards[i]);
-      }
-
+    for (var i = 0; i < 5; i++) {
+      window.renderCards(data[i]);
     }
 
-    var filterDataByType = function (type) {
+    window.filterDataByType = function (type) {
 
       var filteredData = [];
-      for (var i = 0; i < data.length; i++) {
+      for (i = 0; i < data.length; i++) {
         var item = data[i];
         if (type === 'any' || item.offer.type === type) {
           filteredData.push(item);
@@ -64,18 +54,9 @@
 
   };
 
-  var limitDataByNumber = function (data, number) {
-    var limitedData = [];
-    for (var i = 0; i < number; i++) {
-      var item = data[i];
-      if (item) {
-        limitedData.push(item);
-      }
-    }
-    return limitedData;
-  };
-
   // *************************************************************************
+
+  // Алгоритм ошибки при загрузки карточек
 
   var onError = function () {
     var errorMessage = document.createElement('div');
@@ -87,31 +68,32 @@
 })();
 
 // ******************************************************************
-// фильтр
+
+// Функции для взоимодействием с селектом пипов домов
 
 (function () {
 
-  //   function filterDataByType(type) {
-  //
-  //     var filteredData = [];
-  //     for (i = 0; i < data.length; i++) {
-  //       var item = data[i];
-  //       if (type === 'any' || item.offer.type === type) {
-  //         filteredData.push(item);
-  //       }
-  //     }
-  //     return filteredData;
-  //   }
-  //
-  //   function limitDataByNumber(data, number) {
-  //     var limitedData = [];
-  //     for (i = 0; i < number; i++) {
-  //       var item = data[i];
-  //       if (item) {
-  //         limitedData.push(item);
-  //       }
-  //     }
-  //     return limitedData;
-  //   }
-  //
+  window.handlerSelectChange = function (event) {
+    window.clearCards();
+
+    var totalCards = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
+
+    for (var i = 0; i < totalCards.length; i++) {
+      window.renderCards(totalCards[i]);
+    }
+  };
+
+  window.limitDataByNumber = function (data, number) {
+    var limitedData = [];
+    for (var i = 0; i < number; i++) {
+      var item = data[i];
+      if (item) {
+        limitedData.push(item);
+      }
+    }
+    return limitedData;
+  };
+
 })();
+
+// **************************************************************************
