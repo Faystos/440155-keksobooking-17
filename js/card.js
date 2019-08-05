@@ -16,6 +16,7 @@
     pin.appendChild(pinImg);
     window.data.fragObjPin.appendChild(pin);
 
+
     var hendlerClickPin = function () {
       if (document.querySelector('.popup')) {
         window.hendlerCloseAdvertisingCards();
@@ -80,7 +81,11 @@
 (function () {
 
   window.onSuccess = function (data) {
-    window.data.housingType.addEventListener('change', window.handlerSelectChange);
+    console.log(data);
+    // window.data.housingType.addEventListener('change', window.handlerSelectChangeTypeHouse);
+    // window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypePrice);
+    window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeRoom);
+
 
     for (var i = 0; i < 5; i++) {
       window.renderCards(data[i]);
@@ -96,6 +101,29 @@
         }
       }
       return filteredData;
+    };
+
+    window.filterDataByPrice = function (price) {
+
+      var filteredPriceData = [];
+      for (i = 0; i < data.length; i++) {
+        var item = data[i];
+        if (price === 'any' || item.offer.price === price) {
+          filteredPriceData.push(item);
+        }
+      }
+      return filteredPriceData;
+    };
+
+    window.filterDataByRoom = function (room) {
+      var filteredRoomData = [];
+      for (i = 0; i < data.length; i++) {
+        var item = data[i];
+        if (room === 'any' || item.offer.room === room) {
+          filteredRoomData.push(item);
+        }
+      }
+      return filteredRoomData;
     };
 
   };
@@ -139,14 +167,28 @@
 
 (function () {
 
-  window.handlerSelectChange = function (event) {
+  window.handlerSelectChangeTypeHouse = function (event) {
     window.clearCards();
 
-    var totalCards = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
+    var filterTypeHouse = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
+    window.filteringCards(filterTypeHouse);
+  };
 
-    for (var i = 0; i < totalCards.length; i++) {
-      window.renderCards(totalCards[i]);
-    }
+  window.handlerSelectChangeTypePrice = function (event) {
+    window.clearCards();
+
+    var filterTypePrice = (window.limitDataByNumber(window.filterDataByPrice(event.target.value), 5));
+    window.filteringCards(filterTypePrice);
+  };
+
+  window.handlerSelectChangeTypeRoom = function (event) {
+    window.clearCards();
+
+    // var filterTypeRoom = (window.limitDataByNumber(window.filterDataByRoom(event.target.value), 5));
+    var filterTypeRoom = window.filterDataByRoom(event.target.value);
+    window.filteringCards(filterTypeRoom);
+    console.log(event.target.value);
+
   };
 
   window.limitDataByNumber = function (data, number) {
@@ -182,8 +224,18 @@
     window.deleteElement(listFeature);
   };
 
-  window.data.closeAdvertisingCards.addEventListener('click', window.hendlerCloseAdvertisingCards);
+  window.hendlerCloseKeydownAdvertisingCards = function (e) {
+    if (document.querySelector('.popup')) {
+      if (e.keyCode === window.data.ESC_KEYCODE) {
+        window.hendlerCloseAdvertisingCards();
+      }
+    } else {
+      document.removeEventListener('keydown', window.hendlerCloseKeydownAdvertisingCards);
+    }
+  };
 
+  document.addEventListener('keydown', window.hendlerCloseKeydownAdvertisingCards);
+  window.data.closeAdvertisingCards.addEventListener('click', window.hendlerCloseAdvertisingCards);
 
   window.deleteElement = function (elemet) {
     for (var i = 0; i < elemet.length; i++) {
@@ -191,6 +243,14 @@
     }
   };
 
+})();
+
+(function () {
+  window.filteringCards = function (typeFilter) {
+    for (var i = 0; i < typeFilter.length; i++) {
+      window.renderCards(typeFilter[i]);
+    }
+  };
 })();
 
 // *************************************************************************
