@@ -11,6 +11,7 @@
   var mapOverlay = document.querySelector('.map__overlay');
   var DIMENSIONS_IMG = 40;
   var DIMENSIONS_IMG_WIDTH = 45;
+  var ESC_KEYCODE = 27;
   var selectType = document.querySelector('#type');
   var priceType = document.querySelector('#price');
   var selectTimeIn = document.querySelector('#timein');
@@ -30,6 +31,7 @@
   var closeAdvertisingCards = advertisingCards.querySelector('.popup__close');
   var inputRoomNumber = document.querySelector('#room_number');
   var inputCapacity = document.querySelector('#capacity');
+  var successOK = document.querySelector('#success');
 
   window.data = {
     fadedMap: fadedMap,
@@ -49,17 +51,18 @@
     form: form,
     URL_GET: URL_GET,
     URL_POST: URL_POST,
+    ESC_KEYCODE: ESC_KEYCODE,
     error: error,
     mainBlock: mainBlock,
     cards: cards,
     housingType: housingType,
     pinCards: pinCards,
-    // templateCard: templateCard,
     map: map,
     advertisingCards: advertisingCards,
     closeAdvertisingCards: closeAdvertisingCards,
     popupCard: popupCard,
     inputRoomNumber: inputRoomNumber,
     inputCapacity: inputCapacity,
+    successOK: successOK
   };
 })();

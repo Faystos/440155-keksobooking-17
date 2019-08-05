@@ -96,13 +96,33 @@
 
   // Алгоритм ошибки при загрузки карточек
 
-  var onError = function () {
+  window.onError = function () {
     var errorMessage = document.createElement('div');
     errorMessage.appendChild(window.data.error.content.cloneNode(true));
     window.data.mainBlock.appendChild(errorMessage);
+    var onErrorsWindow = document.querySelector('.error');
+
+
+    var closeErrorButton = document.querySelector('.error__button');
+
+    var hendlerСloseErrorWindow = function (e) {
+      e.preventDefault();
+      onErrorsWindow.remove();
+    };
+
+    var handlerKeydownCloseOnErrorsWindow = function (e) {
+      if (e.keyCode === window.data.ESC_KEYCODE) {
+        onErrorsWindow.remove();
+      }
+    };
+
+    closeErrorButton.addEventListener('click', hendlerСloseErrorWindow);
+    document.addEventListener('keydown', handlerKeydownCloseOnErrorsWindow);
+    onErrorsWindow.addEventListener('click', hendlerСloseErrorWindow);
+
   };
 
-  window.load(window.data.URL_GET, onSuccess, onError, 'GET');
+  window.load(window.data.URL_GET, onSuccess, window.onError, 'GET');
 })();
 
 // ******************************************************************

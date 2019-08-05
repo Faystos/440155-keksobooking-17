@@ -76,26 +76,58 @@
 
   var buttonForm = document.querySelector('.ad-form__submit');
 
-  var hendlerClickButtonForm = function (e) {
+  document.querySelector('.ad-form').addEventListener('submit', function (e) {
     e.preventDefault();
+  });
 
-    window.upLoad(onError);
+  var hendlerClickButtonForm = function () {
 
-    var onError = function () {
-      var errorMessage = document.createElement('div');
-      errorMessage.appendChild(window.data.error.content.cloneNode(true));
-      window.data.mainBlock.appendChild(errorMessage);
+    var onSuccess = function () {
+      console.log('УРААА');
+      var successMessage = document.createElement('div');
+      successMessage.appendChild(window.data.successOK.content.cloneNode(true));
+      window.data.mainBlock.appendChild(successMessage);
+
+      var successWindow = document.querySelector('.success');
+
+      var hendlerСloseSuccessWindow = function (e) {
+        e.preventDefault();
+        successWindow.remove();
+        window.closeMap();
+        successWindow.removeEventListener('click', hendlerСloseSuccessWindow);
+      };
+
+      var handlerKeydownСloseSuccessWindow = function (e) {
+        if (e.keyCode === window.data.ESC_KEYCODE) {
+          successWindow.remove();
+          window.closeMap();
+          document.removeEventListener('keydown', handlerKeydownСloseSuccessWindow);
+        }
+      };
+
+      successWindow.addEventListener('click', hendlerСloseSuccessWindow);
+      document.addEventListener('keydown', handlerKeydownСloseSuccessWindow);
+
     };
+
+    window.upLoad(onSuccess, window.onError);
   };
 
   buttonForm.addEventListener('click', hendlerClickButtonForm);
 
-  // var onSuccess = function () {
-  //
-  // };
-
 })();
 
 (function () {
+
+  window.closeMap = function () {
+    window.data.fadedMap.classList.add('map--faded');
+    window.data.fadedForm.classList.add('ad-form--disabled');
+
+    var pinCards = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    window.deleteElement(pinCards);
+
+    document.querySelector('.ad-form').reset();
+
+  };
 
 })();
