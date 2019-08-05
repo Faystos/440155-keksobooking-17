@@ -82,7 +82,7 @@
 
   var hendlerClickButtonForm = function () {
 
-    var onSuccess = function () {
+    var onSuccessForm = function () {
       console.log('УРААА');
       var successMessage = document.createElement('div');
       successMessage.appendChild(window.data.successOK.content.cloneNode(true));
@@ -110,7 +110,9 @@
 
     };
 
-    window.upLoad(onSuccess, window.onError);
+    window.upLoad(onSuccessForm, window.onError);
+
+    // buttonForm.removeEventListener('click', hendlerClickButtonForm);
   };
 
   buttonForm.addEventListener('click', hendlerClickButtonForm);
@@ -127,6 +129,9 @@
     window.deleteElement(pinCards);
 
     document.querySelector('.ad-form').reset();
+
+    window.data.buttonMain.style.left = window.data.startMainPinCoordX;
+    window.data.buttonMain.style.top = window.data.startMainPinCoordY;
 
   };
 

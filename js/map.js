@@ -6,6 +6,7 @@
     window.data.fadedForm.classList.remove('ad-form--disabled');
     window.data.pins.appendChild(window.data.fragObjPin);
   };
+
   window.data.buttonMain.addEventListener('click', hendlerButtonMainClick);
 })();
 

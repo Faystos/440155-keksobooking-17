@@ -16,9 +16,17 @@
     pin.appendChild(pinImg);
     window.data.fragObjPin.appendChild(pin);
 
-    pin.addEventListener('click', function () {
-      window.createCards(card);
-    });
+    var hendlerClickPin = function () {
+      if (document.querySelector('.popup')) {
+        window.hendlerCloseAdvertisingCards();
+        window.createCards(card);
+      } else {
+        window.createCards(card);
+      }
+    };
+
+    pin.addEventListener('click', hendlerClickPin);
+
   };
 
   window.clearCards = function () {
@@ -71,7 +79,7 @@
 
 (function () {
 
-  var onSuccess = function (data) {
+  window.onSuccess = function (data) {
     window.data.housingType.addEventListener('change', window.handlerSelectChange);
 
     for (var i = 0; i < 5; i++) {
@@ -122,7 +130,7 @@
 
   };
 
-  window.load(window.data.URL_GET, onSuccess, window.onError, 'GET');
+  window.load(window.data.URL_GET, window.onSuccess, window.onError, 'GET');
 })();
 
 // ******************************************************************
@@ -160,7 +168,7 @@
 
 (function () {
 
-  window.data.closeAdvertisingCards.addEventListener('click', function () {
+  window.hendlerCloseAdvertisingCards = function () {
     var popupCard = document.querySelector('.popup');
 
     var photo = popupCard.querySelector('.popup__photos');
@@ -172,7 +180,9 @@
     popupCard.remove();
     window.deleteElement(photos);
     window.deleteElement(listFeature);
-  });
+  };
+
+  window.data.closeAdvertisingCards.addEventListener('click', window.hendlerCloseAdvertisingCards);
 
 
   window.deleteElement = function (elemet) {

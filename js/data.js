@@ -32,6 +32,8 @@
   var inputRoomNumber = document.querySelector('#room_number');
   var inputCapacity = document.querySelector('#capacity');
   var successOK = document.querySelector('#success');
+  var startMainPinCoordX = buttonMain.style.left;
+  var startMainPinCoordY = buttonMain.style.top;
 
   window.data = {
     fadedMap: fadedMap,
@@ -63,6 +65,8 @@
     popupCard: popupCard,
     inputRoomNumber: inputRoomNumber,
     inputCapacity: inputCapacity,
-    successOK: successOK
+    successOK: successOK,
+    startMainPinCoordX: startMainPinCoordX,
+    startMainPinCoordY: startMainPinCoordY
   };
 })();
