@@ -82,9 +82,10 @@
 
   window.onSuccess = function (data) {
     console.log(data);
-    // window.data.housingType.addEventListener('change', window.handlerSelectChangeTypeHouse);
+    window.data.housingType.addEventListener('change', window.handlerSelectChangeTypeHouse);
     // window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypePrice);
     window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeRoom);
+    window.data.housingGuests.addEventListener('change', window.handlerSelectChangeTypeGuests)
 
 
     for (var i = 0; i < 5; i++) {
@@ -119,7 +120,19 @@
       var filteredRoomData = [];
       for (i = 0; i < data.length; i++) {
         var item = data[i];
-        if (room === 'any' || item.offer.room === room) {
+        if (room === 'any' || item.offer.rooms === Number(room)) {
+          filteredRoomData.push(item);
+        }
+      }
+
+      return filteredRoomData;
+    };
+
+    window.filterDataByGuests = function (guests) {
+      var filteredRoomData = [];
+      for (i = 0; i < data.length; i++) {
+        var item = data[i];
+        if (guests === 'any' || item.offer.guests === Number(guests)) {
           filteredRoomData.push(item);
         }
       }
@@ -184,12 +197,17 @@
   window.handlerSelectChangeTypeRoom = function (event) {
     window.clearCards();
 
-    // var filterTypeRoom = (window.limitDataByNumber(window.filterDataByRoom(event.target.value), 5));
-    var filterTypeRoom = window.filterDataByRoom(event.target.value);
+    var filterTypeRoom = (window.limitDataByNumber(window.filterDataByRoom(event.target.value), 5));
     window.filteringCards(filterTypeRoom);
-    console.log(event.target.value);
-
   };
+
+  window.handlerSelectChangeTypeGuests = function () {
+    window.clearCards();
+    var filterTypeGuests = (window.limitDataByNumber(window.filterDataByGuests(event.target.value), 5));
+    window.filteringCards(filterTypeGuests);
+  };
+
+
 
   window.limitDataByNumber = function (data, number) {
     var limitedData = [];
@@ -250,6 +268,7 @@
     for (var i = 0; i < typeFilter.length; i++) {
       window.renderCards(typeFilter[i]);
     }
+
   };
 })();
 

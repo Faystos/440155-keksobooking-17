@@ -36,6 +36,7 @@
   var startMainPinCoordY = buttonMain.style.top;
   var priceFilter = document.querySelector('#housing-price');
   var housingRooms = document.querySelector('#housing-rooms');
+  var housingGuests = document.querySelector('#housing-guests');
 
   window.data = {
     fadedMap: fadedMap,
@@ -71,6 +72,7 @@
     startMainPinCoordX: startMainPinCoordX,
     startMainPinCoordY: startMainPinCoordY,
     priceFilter: priceFilter,
-    housingRooms: housingRooms
+    housingRooms: housingRooms,
+    housingGuests: housingGuests
   };
 })();
