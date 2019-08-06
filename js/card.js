@@ -83,9 +83,10 @@
   window.onSuccess = function (data) {
     console.log(data);
     window.data.housingType.addEventListener('change', window.handlerSelectChangeTypeHouse);
-    // window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypePrice);
+    window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypePrice);
     window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeRoom);
-    window.data.housingGuests.addEventListener('change', window.handlerSelectChangeTypeGuests)
+    window.data.housingGuests.addEventListener('change', window.handlerSelectChangeTypeGuests);
+    window.data.checkWiFi.addEventListener('change', window.handlerFilterDataByCheckWiFi);
 
 
     for (var i = 0; i < 5; i++) {
@@ -104,18 +105,25 @@
       return filteredData;
     };
 
+    // ***************************************************
+
     window.filterDataByPrice = function (price) {
 
       var filteredPriceData = [];
       for (i = 0; i < data.length; i++) {
         var item = data[i];
-        if (price === 'any' || item.offer.price === price) {
+        if (price === 'any' ||
+         item.offer.price >= 10000 && item.offer.price <= 50000 && price === 'middle' ||
+         item.offer.price > 0 && item.offer.price <= 10000 && price === 'low' ||
+         item.offer.price >= 50000 && price === 'high') {
           filteredPriceData.push(item);
         }
       }
+
       return filteredPriceData;
     };
 
+    // *********************************************************************
     window.filterDataByRoom = function (room) {
       var filteredRoomData = [];
       for (i = 0; i < data.length; i++) {
@@ -138,6 +146,26 @@
       }
       return filteredRoomData;
     };
+
+    // ***************
+
+    window.filterDataByCheckWiFi = function (check) {
+      var filteredRoomData = [];
+      for (i = 0; i < data.length; i++) {
+        var item = data[i];
+        if (check.checked) {
+          filteredRoomData.push(item.offer.features === check.value);
+        } else {
+          filteredRoomData.push(item);
+        }
+      }
+      return filteredRoomData;
+    };
+  // && item.offer.features === 'wifi'
+  // ********************************
+
+
+    // ***************
 
   };
 
@@ -201,13 +229,17 @@
     window.filteringCards(filterTypeRoom);
   };
 
-  window.handlerSelectChangeTypeGuests = function () {
+  window.handlerSelectChangeTypeGuests = function (event) {
     window.clearCards();
     var filterTypeGuests = (window.limitDataByNumber(window.filterDataByGuests(event.target.value), 5));
     window.filteringCards(filterTypeGuests);
   };
 
-
+  window.handlerFilterDataByCheckWiFi = function (event) {
+    window.clearCards();
+    var filterTypeCheck = (window.limitDataByNumber(window.filterDataByCheckWiFi(event.target), 5));
+    window.filteringCards(filterTypeCheck);
+  };
 
   window.limitDataByNumber = function (data, number) {
     var limitedData = [];
@@ -273,3 +305,5 @@
 })();
 
 // *************************************************************************
+
+// мусор

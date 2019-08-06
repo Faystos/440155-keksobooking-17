@@ -37,6 +37,7 @@
   var priceFilter = document.querySelector('#housing-price');
   var housingRooms = document.querySelector('#housing-rooms');
   var housingGuests = document.querySelector('#housing-guests');
+  var checkWiFi = document.querySelector('#filter-wifi');
 
   window.data = {
     fadedMap: fadedMap,
@@ -73,6 +74,7 @@
     startMainPinCoordY: startMainPinCoordY,
     priceFilter: priceFilter,
     housingRooms: housingRooms,
-    housingGuests: housingGuests
+    housingGuests: housingGuests,
+    checkWiFi: checkWiFi
   };
 })();

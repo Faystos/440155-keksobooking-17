@@ -83,7 +83,7 @@
   var hendlerClickButtonForm = function () {
 
     var onSuccessForm = function () {
-      console.log('УРААА');
+
       var successMessage = document.createElement('div');
       successMessage.appendChild(window.data.successOK.content.cloneNode(true));
       window.data.mainBlock.appendChild(successMessage);
