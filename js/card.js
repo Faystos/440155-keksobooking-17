@@ -81,6 +81,7 @@
 (function () {
 
   window.onSuccess = function (data) {
+    console.log(data);
     window.data.housingType.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeData);
@@ -98,24 +99,48 @@
     }
 
     // *************************************************************************
+
     window.filterDataByType = function (type) {
+
+      console.log(type);
 
       var filteredData = [];
       for (i = 0; i < data.length; i++) {
         var item = data[i];
         if (type === 'any' ||
-         item.offer.type === type ||
-         item.offer.price >= 10000 && item.offer.price <= 50000 && type === 'middle' ||
-         item.offer.price > 0 && item.offer.price <= 10000 && type === 'low' ||
-         item.offer.price >= 50000 && type === 'high' ||
-         item.offer.rooms === Number(type) ||
-         item.offer.guests === Number(type) ||
-         type.checked && item.offer.features.includes(type.value)) {
+           item.offer.type === type ||
+           item.offer.price >= 10000 && item.offer.price <= 50000 && type === 'middle' ||
+           item.offer.price > 0 && item.offer.price <= 10000 && type === 'low' ||
+           item.offer.price >= 50000 && type === 'high' ||
+           item.offer.rooms === Number(type) ||
+           item.offer.guests === Number(type) ||
+           type.checked && item.offer.features.includes(type.value)) {
           filteredData.push(item);
         }
       }
       return filteredData;
     };
+
+
+
+    // window.filterDataByType = function (type) {
+    //
+    //   var filteredData = [];
+    //   for (i = 0; i < data.length; i++) {
+    //     var item = data[i];
+    //     if (type === 'any' ||
+    //      item.offer.type === type ||
+    //      item.offer.price >= 10000 && item.offer.price <= 50000 && type === 'middle' ||
+    //      item.offer.price > 0 && item.offer.price <= 10000 && type === 'low' ||
+    //      item.offer.price >= 50000 && type === 'high' ||
+    //      item.offer.rooms === Number(type) ||
+    //      item.offer.guests === Number(type) ||
+    //      type.checked && item.offer.features.includes(type.value)) {
+    //       filteredData.push(item);
+    //     }
+    //   }
+    //   return filteredData;
+    // };
 
     // *************************************************************************
 
@@ -175,6 +200,10 @@
 
     var filterСards = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
     window.filteringCards(filterСards);
+
+    // event.target.value
+
+    // console.log (filterСards);
   };
 
   // ***************************************************************************
@@ -246,5 +275,21 @@
       window.renderCards(typeFilter[i]);
     }
 
+  };
+})();
+
+(function () {
+
+  window.settingFiltr = {
+    type: 'any',
+    price: 'any',
+    rooms: 'any',
+    guests: 'any',
+    wifi: false,
+    dishwasher: false,
+    parking: false,
+    washer: false,
+    elevator: false,
+    conditioner: false
   };
 })();
