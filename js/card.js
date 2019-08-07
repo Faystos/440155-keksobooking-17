@@ -1,7 +1,6 @@
 'use strict';
 
 // *************************Отрисовка карточек**********************************
-
 (function () {
 
   window.renderCards = function (card) {
