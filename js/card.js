@@ -1,5 +1,5 @@
 'use strict';
-// Отрисовка карточек
+// *************************Отрисовка карточек**********************************
 
 (function () {
 
@@ -36,7 +36,6 @@
   };
 
   window.createCards = function (card) {
-
     window.data.popupCard.querySelector('.popup__avatar').src = card.author.avatar;
     window.data.popupCard.querySelector('.popup__title').textContent = card.offer.title;
     window.data.popupCard.querySelector('.popup__text--address').textContent = card.offer.address + ', ' + card.location.x + ', ' + card.location.y;
@@ -74,26 +73,29 @@
 
 })();
 
-// **********************************************************************
+// *****************************************************************************
 
-// Загруска карточек и алгоритм фильтрации
+// ******************Загруска карточек и алгоритм фильтрации********************
 
 (function () {
 
   window.onSuccess = function (data) {
-    // console.log(data);
     window.data.housingType.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.housingGuests.addEventListener('change', window.handlerSelectChangeTypeData);
-    window.data.checkWiFi.addEventListener('change', window.handlerFilterDataByCheckWiFi);
-
+    window.data.checkWiFi.addEventListener('change', window.handlerFilterDataByCheck);
+    window.data.checkDishwasher.addEventListener('change', window.handlerFilterDataByCheck);
+    window.data.checkParking.addEventListener('change', window.handlerFilterDataByCheck);
+    window.data.checkWasher.addEventListener('change', window.handlerFilterDataByCheck);
+    window.data.checkElevator.addEventListener('change', window.handlerFilterDataByCheck);
+    window.data.chekConditioner.addEventListener('change', window.handlerFilterDataByCheck);
 
     for (var i = 0; i < 5; i++) {
       window.renderCards(data[i]);
     }
 
-    // ******************************************************************************************
+    // *************************************************************************
     window.filterDataByType = function (type) {
 
       var filteredData = [];
@@ -105,101 +107,31 @@
          item.offer.price > 0 && item.offer.price <= 10000 && type === 'low' ||
          item.offer.price >= 50000 && type === 'high' ||
          item.offer.rooms === Number(type) ||
-         item.offer.guests === Number(type)) {
+         item.offer.guests === Number(type) ||
+         type.checked && item.offer.features.includes(type.value)) {
           filteredData.push(item);
         }
       }
       return filteredData;
     };
-// type === 'any' ||
-    // ******************************************************************************************
 
-    // window.filterDataByType = function (type) {
-    //
-    //   var filteredData = [];
-    //   for (i = 0; i < data.length; i++) {
-    //     var item = data[i];
-    //     if (type === 'any' || item.offer.type === type) {
-    //       filteredData.push(item);
-    //     }
-    //   }
-    //   return filteredData;
-    // };
-
-    // ***************************************************
-
-    // window.filterDataByPrice = function (price) {
-    //
-    //   var filteredPriceData = [];
-    //   for (i = 0; i < data.length; i++) {
-    //     var item = data[i];
-    //     if (price === 'any' ||
-    //      item.offer.price >= 10000 && item.offer.price <= 50000 && price === 'middle' ||
-    //      item.offer.price > 0 && item.offer.price <= 10000 && price === 'low' ||
-    //      item.offer.price >= 50000 && price === 'high') {
-    //       filteredPriceData.push(item);
-    //     }
-    //   }
-    //   return filteredPriceData;
-    // };
-
-    // *********************************************************************
-
-    // window.filterDataByRoom = function (room) {
-    //   var filteredRoomData = [];
-    //   for (i = 0; i < data.length; i++) {
-    //     var item = data[i];
-    //     if (room === 'any' || item.offer.rooms === Number(room)) {
-    //       filteredRoomData.push(item);
-    //     }
-    //   }
-    //
-    //   return filteredRoomData;
-    // };
-
-    // *********************************************************************
-
-    // window.filterDataByGuests = function (guests) {
-    //   var filteredRoomData = [];
-    //   for (i = 0; i < data.length; i++) {
-    //     var item = data[i];
-    //     if (guests === 'any' || item.offer.guests === Number(guests)) {
-    //       filteredRoomData.push(item);
-    //     }
-    //   }
-    //   return filteredRoomData;
-    // };
-
-    // ***************
+    // *************************************************************************
 
     window.filterDataByCheckWiFi = function (check) {
       var filteredRoomData = [];
       for (i = 0; i < data.length; i++) {
         var item = data[i];
-        if (check.checked) {
-          // filteredRoomData.push(item);
-          console.log(item.offer.features === ['wifi']);
-          // console.log(item);
-        } else {
-          // filteredRoomData.push(item);
+        if (check.checked && item.offer.features.includes(check.value)) {
+          filteredRoomData.push(item);
         }
       }
-
-
-
       return filteredRoomData;
     };
-  // && item.offer.features === 'wifi'
-  // ********************************
-
-
-    // ***************
-
   };
 
-  // *************************************************************************
+  // ***************************************************************************
 
-  // Алгоритм ошибки при загрузки карточек
+  // ***************Алгоритм ошибки при загрузки карточек***********************
 
   window.onError = function () {
     var errorMessage = document.createElement('div');
@@ -230,12 +162,11 @@
   window.load(window.data.URL_GET, window.onSuccess, window.onError, 'GET');
 })();
 
-// ******************************************************************
+// *****************************************************************************
 
-// Функции для взоимодействием с селектом пипов домов
+// **********Функции для взоимодействием с селектом пипов домов*****************
 
 (function () {
-// ********************************************************************************
 
   window.handlerSelectChangeTypeData = function (event) {
     window.clearCards();
@@ -244,42 +175,14 @@
     window.filteringCards(filterСards);
   };
 
-  // ********************************************************************************
+  // ***************************************************************************
 
-  // window.handlerSelectChangeTypeHouse = function (event) {
-  //   window.clearCards();
-  //
-  //   var filterTypeHouse = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
-  //   window.filteringCards(filterTypeHouse);
-  // };
-  //
-  // window.handlerSelectChangeTypePrice = function (event) {
-  //   window.clearCards();
-  //
-  //   var filterTypePrice = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
-  //   window.filteringCards(filterTypePrice);
-  // };
-  //
-  // window.handlerSelectChangeTypeRoom = function (event) {
-  //   window.clearCards();
-  //
-  //   var filterTypeRoom = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
-  //   window.filteringCards(filterTypeRoom);
-  // };
-  //
-  // window.handlerSelectChangeTypeGuests = function (event) {
-  //   window.clearCards();
-  //   var filterTypeGuests = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
-  //   window.filteringCards(filterTypeGuests);
-  // };
+  // ***************************************************************************
 
-  // **************************************************************************************************
-  window.handlerFilterDataByCheckWiFi = function (event) {
+  window.handlerFilterDataByCheck = function (event) {
     window.clearCards();
-    var filterTypeCheck = (window.limitDataByNumber(window.filterDataByCheckWiFi(event.target), 5));
+    var filterTypeCheck = (window.limitDataByNumber(window.window.filterDataByType(event.target), 5));
     window.filteringCards(filterTypeCheck);
-
-    // window.filterDataByCheckWiFi(event.target);
   };
 
   window.limitDataByNumber = function (data, number) {
@@ -292,12 +195,11 @@
     }
     return limitedData;
   };
-
 })();
 
-// **************************************************************************
+// *****************************************************************************
 
-// Закрытие карточки карточки удаление элементов
+// ****************Закрытие карточки карточки удаление элементов****************
 
 (function () {
 
@@ -344,7 +246,3 @@
 
   };
 })();
-
-// *************************************************************************
-
-// мусор

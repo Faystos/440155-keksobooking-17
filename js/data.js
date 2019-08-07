@@ -38,6 +38,11 @@
   var housingRooms = document.querySelector('#housing-rooms');
   var housingGuests = document.querySelector('#housing-guests');
   var checkWiFi = document.querySelector('#filter-wifi');
+  var checkDishwasher = document.querySelector('#filter-dishwasher');
+  var checkParking = document.querySelector('#filter-parking');
+  var checkWasher = document.querySelector('#filter-washer');
+  var checkElevator = document.querySelector('#filter-elevator');
+  var chekConditioner = document.querySelector('#filter-conditioner');
 
   window.data = {
     fadedMap: fadedMap,
@@ -75,6 +80,11 @@
     priceFilter: priceFilter,
     housingRooms: housingRooms,
     housingGuests: housingGuests,
-    checkWiFi: checkWiFi
+    checkWiFi: checkWiFi,
+    checkDishwasher: checkDishwasher,
+    checkParking: checkParking,
+    checkWasher: checkWasher,
+    checkElevator: checkElevator,
+    chekConditioner: chekConditioner
   };
 })();
