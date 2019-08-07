@@ -10,16 +10,39 @@
   var adressInp = document.querySelector('#address');
   var mapOverlay = document.querySelector('.map__overlay');
   var DIMENSIONS_IMG = 40;
+  var DIMENSIONS_IMG_WIDTH = 45;
+  var ESC_KEYCODE = 27;
   var selectType = document.querySelector('#type');
   var priceType = document.querySelector('#price');
   var selectTimeIn = document.querySelector('#timein');
   var selectTimeOut = document.querySelector('#timeout');
-  var URL = 'https://js.dump.academy/keksobooking/data';
+  var URL_GET = 'https://js.dump.academy/keksobooking/data';
+  var URL_POST = 'https://js.dump.academy/keksobooking';
   var error = document.querySelector('#error');
   var mainBlock = document.querySelector('main');
   var cards = [];
   var housingType = document.querySelector('#housing-type');
   var fragObjPin = document.createDocumentFragment();
+  var pinCards = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  var templateCard = document.querySelector('#card');
+  var map = document.querySelector('.map');
+  var advertisingCards = templateCard.content.cloneNode(true);
+  var popupCard = advertisingCards.querySelector('.popup');
+  var closeAdvertisingCards = advertisingCards.querySelector('.popup__close');
+  var inputRoomNumber = document.querySelector('#room_number');
+  var inputCapacity = document.querySelector('#capacity');
+  var successOK = document.querySelector('#success');
+  var startMainPinCoordX = buttonMain.style.left;
+  var startMainPinCoordY = buttonMain.style.top;
+  var priceFilter = document.querySelector('#housing-price');
+  var housingRooms = document.querySelector('#housing-rooms');
+  var housingGuests = document.querySelector('#housing-guests');
+  var checkWiFi = document.querySelector('#filter-wifi');
+  var checkDishwasher = document.querySelector('#filter-dishwasher');
+  var checkParking = document.querySelector('#filter-parking');
+  var checkWasher = document.querySelector('#filter-washer');
+  var checkElevator = document.querySelector('#filter-elevator');
+  var chekConditioner = document.querySelector('#filter-conditioner');
 
   window.data = {
     fadedMap: fadedMap,
@@ -30,16 +53,38 @@
     adressInp: adressInp,
     mapOverlay: mapOverlay,
     DIMENSIONS_IMG: DIMENSIONS_IMG,
+    DIMENSIONS_IMG_WIDTH: DIMENSIONS_IMG_WIDTH,
     selectType: selectType,
     priceType: priceType,
     selectTimeIn: selectTimeIn,
     selectTimeOut: selectTimeOut,
     fragObjPin: fragObjPin,
     form: form,
-    URL: URL,
+    URL_GET: URL_GET,
+    URL_POST: URL_POST,
+    ESC_KEYCODE: ESC_KEYCODE,
     error: error,
     mainBlock: mainBlock,
     cards: cards,
-    housingType: housingType
+    housingType: housingType,
+    pinCards: pinCards,
+    map: map,
+    advertisingCards: advertisingCards,
+    closeAdvertisingCards: closeAdvertisingCards,
+    popupCard: popupCard,
+    inputRoomNumber: inputRoomNumber,
+    inputCapacity: inputCapacity,
+    successOK: successOK,
+    startMainPinCoordX: startMainPinCoordX,
+    startMainPinCoordY: startMainPinCoordY,
+    priceFilter: priceFilter,
+    housingRooms: housingRooms,
+    housingGuests: housingGuests,
+    checkWiFi: checkWiFi,
+    checkDishwasher: checkDishwasher,
+    checkParking: checkParking,
+    checkWasher: checkWasher,
+    checkElevator: checkElevator,
+    chekConditioner: chekConditioner
   };
 })();
