@@ -111,8 +111,6 @@
     };
 
     window.upLoad(onSuccessForm, window.onError);
-
-    // buttonForm.removeEventListener('click', hendlerClickButtonForm);
   };
 
   buttonForm.addEventListener('click', hendlerClickButtonForm);

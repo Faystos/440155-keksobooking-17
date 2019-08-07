@@ -43,7 +43,7 @@
     var req = new XMLHttpRequest();
     req.open('POST', window.data.URL_POST, true);
     req.send(formData);
-    // // **************************************
+    //  **************************************
     req.addEventListener('load', function () {
       if (req.status === 200) {
         onSuccess('Cтатус ответа: ' + req.status + ' ' + req.statusText);

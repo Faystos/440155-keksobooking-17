@@ -84,6 +84,7 @@
     window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.housingGuests.addEventListener('change', window.handlerSelectChangeTypeData);
+
     window.data.checkWiFi.addEventListener('change', window.handlerFilterDataByCheck);
     window.data.checkDishwasher.addEventListener('change', window.handlerFilterDataByCheck);
     window.data.checkParking.addEventListener('change', window.handlerFilterDataByCheck);
@@ -177,13 +178,13 @@
 
   // ***************************************************************************
 
-  // ***************************************************************************
-
   window.handlerFilterDataByCheck = function (event) {
     window.clearCards();
     var filterTypeCheck = (window.limitDataByNumber(window.window.filterDataByType(event.target), 5));
     window.filteringCards(filterTypeCheck);
   };
+
+  // ***************************************************************************
 
   window.limitDataByNumber = function (data, number) {
     var limitedData = [];
