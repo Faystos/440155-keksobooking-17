@@ -81,18 +81,17 @@
 (function () {
 
   window.onSuccess = function (data) {
-    console.log(data);
     window.data.housingType.addEventListener('change', window.handlerSelectChangeTypeData);
-    window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypeData);
-    window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeData);
-    window.data.housingGuests.addEventListener('change', window.handlerSelectChangeTypeData);
-
-    window.data.checkWiFi.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.checkDishwasher.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.checkParking.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.checkWasher.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.checkElevator.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.chekConditioner.addEventListener('change', window.handlerFilterDataByCheck);
+    // window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypeData);
+    // window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeData);
+    // window.data.housingGuests.addEventListener('change', window.handlerSelectChangeTypeData);
+    //
+    // window.data.checkWiFi.addEventListener('change', window.handlerFilterDataByCheck);
+    // window.data.checkDishwasher.addEventListener('change', window.handlerFilterDataByCheck);
+    // window.data.checkParking.addEventListener('change', window.handlerFilterDataByCheck);
+    // window.data.checkWasher.addEventListener('change', window.handlerFilterDataByCheck);
+    // window.data.checkElevator.addEventListener('change', window.handlerFilterDataByCheck);
+    // window.data.chekConditioner.addEventListener('change', window.handlerFilterDataByCheck);
 
     for (var i = 0; i < 5; i++) {
       window.renderCards(data[i]);
@@ -100,25 +99,28 @@
 
     // *************************************************************************
 
-    window.filterDataByType = function (type) {
-
-      console.log(type);
+    window.filterDataByType = function () {
 
       var filteredData = [];
       for (i = 0; i < data.length; i++) {
         var item = data[i];
-        if (type === 'any' ||
-           item.offer.type === type ||
-           item.offer.price >= 10000 && item.offer.price <= 50000 && type === 'middle' ||
-           item.offer.price > 0 && item.offer.price <= 10000 && type === 'low' ||
-           item.offer.price >= 50000 && type === 'high' ||
-           item.offer.rooms === Number(type) ||
-           item.offer.guests === Number(type) ||
-           type.checked && item.offer.features.includes(type.value)) {
+        if (item.offer.type === window.settingFilter.type) {
           filteredData.push(item);
         }
       }
+
       return filteredData;
+    };
+
+//window.settingFilter.type === 'any' ||
+    window.updateFilterSettings = function (target) {
+      // if (target.type === 'checkbox') {
+      //   window.settingFilter[target.name] = target.checked;
+      // } else {
+        // select
+        window.settingFilter[target.name] = target.value;
+        console.log(window.settingFilter[target.name]);
+      // }
     };
 
 
@@ -197,14 +199,25 @@
 
   window.handlerSelectChangeTypeData = function (event) {
     window.clearCards();
-
-    var filterСards = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
-    window.filteringCards(filterСards);
-
-    // event.target.value
-
-    // console.log (filterСards);
+    window.updateFilterSettings(event.target);
+    window.filteringCards(window.filterDataByType());
+    window.reng(window.filterDataByType());
   };
+
+  window.reng = function (ff) {
+    console.log(ff);
+  }
+
+  // window.handlerSelectChangeTypeData = function (event) {
+  //   window.clearCards();
+  //
+  //   var filterСards = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
+  //   window.filteringCards(filterСards);
+  //
+  //   // event.target.value
+  //
+  //   // console.log (filterСards);
+  // };
 
   // ***************************************************************************
 
@@ -276,11 +289,19 @@
     }
 
   };
+
+  // window.filteringCards = function (typeFilter) {
+  //   for (var i = 0; i < typeFilter.length; i++) {
+  //     window.renderCards(typeFilter[i]);
+  //   }
+  //
+  // };
+
 })();
 
 (function () {
 
-  window.settingFiltr = {
+  window.settingFilter = {
     type: 'any',
     price: 'any',
     rooms: 'any',
