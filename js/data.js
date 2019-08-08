@@ -7,7 +7,7 @@
   var mapWight = document.querySelector('.map').offsetWidth;
   var pins = document.querySelector('.map__pins');
   var buttonMain = document.querySelector('.map__pin--main');
-  var adressInp = document.querySelector('#address');
+  var addressInp = document.querySelector('#address');
   var mapOverlay = document.querySelector('.map__overlay');
   var DIMENSIONS_IMG = 40;
   var DIMENSIONS_IMG_WIDTH = 45;
@@ -42,7 +42,9 @@
   var checkParking = document.querySelector('#filter-parking');
   var checkWasher = document.querySelector('#filter-washer');
   var checkElevator = document.querySelector('#filter-elevator');
-  var chekConditioner = document.querySelector('#filter-conditioner');
+  var checkConditioner = document.querySelector('#filter-conditioner');
+  var XHR_STATUS_OK = 200;
+  var TIMEOUT = 1000;
 
   window.data = {
     fadedMap: fadedMap,
@@ -50,7 +52,7 @@
     mapWight: mapWight,
     pins: pins,
     buttonMain: buttonMain,
-    adressInp: adressInp,
+    addressInp: addressInp,
     mapOverlay: mapOverlay,
     DIMENSIONS_IMG: DIMENSIONS_IMG,
     DIMENSIONS_IMG_WIDTH: DIMENSIONS_IMG_WIDTH,
@@ -85,6 +87,8 @@
     checkParking: checkParking,
     checkWasher: checkWasher,
     checkElevator: checkElevator,
-    chekConditioner: chekConditioner
+    checkConditioner: checkConditioner,
+    XHR_STATUS_OK: XHR_STATUS_OK,
+    TIMEOUT: TIMEOUT
   };
 })();

@@ -9,7 +9,7 @@
     xhr.responseType = 'json';
     // **************************************
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === window.data.XHR_STATUS_OK) {
         onSuccess(xhr.response);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -24,20 +24,16 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
     // // *******************************************
-    xhr.timeout = 10000; // 10s
+    xhr.timeout = window.data.TIMEOUT; // 10s
 
     xhr.open(methodType, url);
     xhr.send();
   };
-})();
+  // *****************************************************************************
 
-// *****************************************************************************
+  // ******************************Отправка формы*********************************
 
-// ******************************Отправка формы*********************************
-
-(function () {
-
-  window.upLoad = function (onSuccess, onErrors) {
+  window.upLoad = function (onSuccessForm, onErrors) {
     var formSubmission = document.querySelector('.ad-form');
     var formData = new FormData(formSubmission);
     var req = new XMLHttpRequest();
@@ -45,10 +41,10 @@
     req.send(formData);
     //  **************************************
     req.addEventListener('load', function () {
-      if (req.status === 200) {
-        onSuccess('Cтатус ответа: ' + req.status + ' ' + req.statusText);
+      if (req.status === window.data.XHR_STATUS_OK) {
+        onSuccessForm();
       } else {
-        onErrors('Cтатус ответа: ' + req.status + ' ' + req.statusText);
+        onErrors();
       }
     });
     // *****************************************

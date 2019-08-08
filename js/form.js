@@ -21,7 +21,7 @@
     }
   };
 
-  var ondSelectTypeHous = function (event) {
+  var ondSelectTypeHouse = function (event) {
     var selectHouseType = event.currentTarget.value;
     var minPrice = prices[selectHouseType].min;
     var placeholderSelectType = prices[selectHouseType].placeholder;
@@ -29,19 +29,15 @@
     window.data.priceType.setAttribute('placeholder', placeholderSelectType);
   };
 
-  window.data.selectType.addEventListener('change', ondSelectTypeHous);
-})();
+  window.data.selectType.addEventListener('change', ondSelectTypeHouse);
 
-(function () {
   window.data.selectTimeIn.onchange = function () {
     window.data.selectTimeOut.selectedIndex = this.selectedIndex;
   };
   window.data.selectTimeOut.onchange = function () {
     window.data.selectTimeIn.selectedIndex = this.selectedIndex;
   };
-})();
 
-(function () {
   var capacityAll = window.data.inputCapacity.querySelectorAll('option');
   var roomNumber = window.data.inputRoomNumber.querySelectorAll('option');
 
@@ -50,74 +46,53 @@
     capacityAll[2].selected = true;
   }
 
-  window.data.inputRoomNumber.addEventListener('change', function () {
+  window.data.inputRoomNumber.addEventListener('change', validRoomInput);
+
+  var validRoomInput = function () {
+    if (roomNumber[1].selected) {
+      capacityAll[1].selected = true;
+      capacityAll[2].removeAttribute('disabled');
+      capacityAll[1].removeAttribute('disabled');
+    }
+    if (roomNumber[2].selected) {
+      capacityAll[0].removeAttribute('disabled');
+      capacityAll[1].removeAttribute('disabled');
+      capacityAll[2].removeAttribute('disabled');
+      capacityAll[0].selected = true;
+    }
     if (roomNumber[3].selected) {
       capacityAll[3].removeAttribute('disabled');
       capacityAll[0].setAttribute('disabled', 'true');
       capacityAll[1].setAttribute('disabled', 'true');
       capacityAll[2].setAttribute('disabled', 'true');
+      capacityAll[3].selected = true;
     }
+  };
 
-    if (roomNumber[1].selected) {
-      capacityAll[1].removeAttribute('disabled');
-      capacityAll[2].removeAttribute('disabled');
-    }
-
-    if (roomNumber[2].selected) {
-      capacityAll[0].removeAttribute('disabled');
-      capacityAll[1].removeAttribute('disabled');
-      capacityAll[2].removeAttribute('disabled');
-    }
-  });
-
-})();
-
-(function () {
 
   var buttonForm = document.querySelector('.ad-form__submit');
+  var resetButton = document.querySelector('.ad-form__reset');
+  var inputTitle = document.querySelector('#title');
 
   document.querySelector('.ad-form').addEventListener('submit', function (e) {
     e.preventDefault();
   });
 
   var hendlerClickButtonForm = function () {
+    if (inputTitle.value === '') {
+      return;
+    }
+    window.onSuccessForm();
+    window.upLoad(window.onSuccessForm, window.onError);
+  };
 
-    var onSuccessForm = function () {
-
-      var successMessage = document.createElement('div');
-      successMessage.appendChild(window.data.successOK.content.cloneNode(true));
-      window.data.mainBlock.appendChild(successMessage);
-
-      var successWindow = document.querySelector('.success');
-
-      var hendlerСloseSuccessWindow = function (e) {
-        e.preventDefault();
-        successWindow.remove();
-        window.closeMap();
-        successWindow.removeEventListener('click', hendlerСloseSuccessWindow);
-      };
-
-      var handlerKeydownСloseSuccessWindow = function (e) {
-        if (e.keyCode === window.data.ESC_KEYCODE) {
-          successWindow.remove();
-          window.closeMap();
-          document.removeEventListener('keydown', handlerKeydownСloseSuccessWindow);
-        }
-      };
-
-      successWindow.addEventListener('click', hendlerСloseSuccessWindow);
-      document.addEventListener('keydown', handlerKeydownСloseSuccessWindow);
-
-    };
-
-    window.upLoad(onSuccessForm, window.onError);
+  var hendlerClickButtonReset = function () {
+    window.closeMap();
   };
 
   buttonForm.addEventListener('click', hendlerClickButtonForm);
+  resetButton.addEventListener('click', hendlerClickButtonReset);
 
-})();
-
-(function () {
 
   window.closeMap = function () {
     window.data.fadedMap.classList.add('map--faded');
@@ -130,7 +105,30 @@
 
     window.data.buttonMain.style.left = window.data.startMainPinCoordX;
     window.data.buttonMain.style.top = window.data.startMainPinCoordY;
-
   };
+
+  window.onSuccessForm = function () {
+    var successMessage = window.data.successOK.content.cloneNode(true);
+    window.data.mainBlock.appendChild(successMessage);
+
+    var hendlerСloseSuccessWindow = function () {
+
+      document.querySelector('.success').remove();
+      window.closeMap();
+      document.removeEventListener('click', hendlerСloseSuccessWindow);
+    };
+
+    var handlerKeydownСloseSuccessWindow = function (e) {
+      if (e.keyCode === window.data.ESC_KEYCODE) {
+        document.querySelector('.success').remove();
+        window.closeMap();
+        document.removeEventListener('keydown', handlerKeydownСloseSuccessWindow);
+      }
+    };
+
+    document.addEventListener('click', hendlerСloseSuccessWindow);
+    document.addEventListener('keydown', handlerKeydownСloseSuccessWindow);
+  };
+
 
 })();

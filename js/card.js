@@ -72,13 +72,10 @@
     window.data.map.appendChild(window.data.popupCard);
   };
 
-})();
+  // *****************************************************************************
 
-// *****************************************************************************
+  // ******************Загруска карточек и алгоритм фильтрации********************
 
-// ******************Загруска карточек и алгоритм фильтрации********************
-
-(function () {
 
   window.onSuccess = function (data) {
     window.data.housingType.addEventListener('change', window.handlerSelectChangeTypeData);
@@ -90,7 +87,7 @@
     window.data.checkParking.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.checkWasher.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.checkElevator.addEventListener('change', window.handlerSelectChangeTypeData);
-    window.data.chekConditioner.addEventListener('change', window.handlerSelectChangeTypeData);
+    window.data.checkConditioner.addEventListener('change', window.handlerSelectChangeTypeData);
 
     for (var i = 0; i < 5; i++) {
       window.renderCards(data[i]);
@@ -182,26 +179,17 @@
 
   window.load(window.data.URL_GET, window.onSuccess, window.onError, 'GET');
 
-})();
+  // *****************************************************************************
 
-// *****************************************************************************
-
-// **********Функции для взоимодействием с селектом пипов домов*****************
-
-(function () {
+  // **********Функции для взоимодействием с селектом пипов домов*****************
 
   window.handlerSelectChangeTypeData = function (event) {
     window.clearCards();
+    window.closeRemovePopupCard();
     window.updateFilterSettings(event.target);
     window.filteringCards(window.limitDataByNumber(window.filterDataByType(), 5));
   };
   // ***************************************************************************
-
-  window.handlerFilterDataByCheck = function (event) {
-    window.clearCards();
-    var filterTypeCheck = (window.limitDataByNumber(window.window.filterDataByType(event.target), 5));
-    window.filteringCards(filterTypeCheck);
-  };
 
   // ***************************************************************************
 
@@ -215,15 +203,17 @@
     }
     return limitedData;
   };
-})();
 
-// *****************************************************************************
+  // *****************************************************************************
 
-// ****************Закрытие карточки карточки удаление элементов****************
+  // ****************Закрытие карточки карточки удаление элементов****************
 
-(function () {
 
   window.hendlerCloseAdvertisingCards = function () {
+    window.closeRemovePopupCard();
+  };
+
+  window.closeRemovePopupCard = function () {
     var popupCard = document.querySelector('.popup');
 
     var photo = popupCard.querySelector('.popup__photos');
@@ -256,9 +246,6 @@
     }
   };
 
-})();
-
-(function () {
   window.filteringCards = function (typeFilter) {
     for (var i = 0; i < typeFilter.length; i++) {
       window.renderCards(typeFilter[i]);
