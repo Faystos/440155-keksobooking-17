@@ -85,53 +85,72 @@
     window.data.priceFilter.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.housingRooms.addEventListener('change', window.handlerSelectChangeTypeData);
     window.data.housingGuests.addEventListener('change', window.handlerSelectChangeTypeData);
-
-    window.data.checkWiFi.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.checkDishwasher.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.checkParking.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.checkWasher.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.checkElevator.addEventListener('change', window.handlerFilterDataByCheck);
-    window.data.chekConditioner.addEventListener('change', window.handlerFilterDataByCheck);
+    window.data.checkWiFi.addEventListener('change', window.handlerSelectChangeTypeData);
+    window.data.checkDishwasher.addEventListener('change', window.handlerSelectChangeTypeData);
+    window.data.checkParking.addEventListener('change', window.handlerSelectChangeTypeData);
+    window.data.checkWasher.addEventListener('change', window.handlerSelectChangeTypeData);
+    window.data.checkElevator.addEventListener('change', window.handlerSelectChangeTypeData);
+    window.data.chekConditioner.addEventListener('change', window.handlerSelectChangeTypeData);
 
     for (var i = 0; i < 5; i++) {
       window.renderCards(data[i]);
     }
 
     // *************************************************************************
-    window.filterDataByType = function (type) {
 
+    // обновляем фильтр
+    window.updateFilterSettings = function (target) {
+      if (target.type === 'checkbox') {
+        settingFilter[target.value] = target.checked;
+      } else {
+        settingFilter[target.name] = target.value;
+      }
+    };
+
+    // фильтр
+
+    window.filterDataByType = function () {
       var filteredData = [];
       for (i = 0; i < data.length; i++) {
         var item = data[i];
-        if (type === 'any' ||
-         item.offer.type === type ||
-         item.offer.price >= 10000 && item.offer.price <= 50000 && type === 'middle' ||
-         item.offer.price > 0 && item.offer.price <= 10000 && type === 'low' ||
-         item.offer.price >= 50000 && type === 'high' ||
-         item.offer.rooms === Number(type) ||
-         item.offer.guests === Number(type) ||
-         type.checked && item.offer.features.includes(type.value)) {
+        if ((settingFilter['housing-type'] === 'any' ||
+         item.offer.type === settingFilter['housing-type']) &&
+         (settingFilter['housing-price'] === 'any' ||
+           item.offer.price >= 10000 && item.offer.price <= 50000 && settingFilter['housing-price'] === 'middle' ||
+          item.offer.price > 0 && item.offer.price <= 10000 && settingFilter['housing-price'] === 'low' ||
+          item.offer.price >= 50000 && settingFilter['housing-price'] === 'high') &&
+         (settingFilter['housing-rooms'] === 'any' ||
+          item.offer.rooms === Number(settingFilter['housing-rooms'])) &&
+         (settingFilter['housing-rooms'] === 'any' ||
+         item.offer.guests === Number(settingFilter['housing-guests'])) &&
+        (!settingFilter['wifi'] || item.offer.features.includes('wifi') === settingFilter['wifi']) &&
+        (!settingFilter['dishwasher'] || item.offer.features.includes('dishwasher') === settingFilter['dishwasher']) &&
+        (!settingFilter['parking'] || item.offer.features.includes('parking') === settingFilter['parking']) &&
+        (!settingFilter['washer'] || item.offer.features.includes('wifi') === settingFilter['washer']) &&
+        (!settingFilter['elevator'] || item.offer.features.includes('wifi') === settingFilter['elevator']) &&
+        (!settingFilter['conditioner'] || item.offer.features.includes('wifi') === settingFilter['conditioner'])) {
           filteredData.push(item);
         }
       }
       return filteredData;
     };
 
-    // *************************************************************************
-
-    window.filterDataByCheckWiFi = function (check) {
-      var filteredRoomData = [];
-      for (i = 0; i < data.length; i++) {
-        var item = data[i];
-        if (check.checked && item.offer.features.includes(check.value)) {
-          filteredRoomData.push(item);
-        }
-      }
-      return filteredRoomData;
+    var settingFilter = {
+      'housing-type': 'any',
+      'housing-price': 'any',
+      'housing-rooms': 'any',
+      'housing-guests': 'any',
+      'wifi': false,
+      'dishwasher': false,
+      'parking': false,
+      'washer': false,
+      'elevator': false,
+      'conditioner': false
     };
+
   };
 
-  // ***************************************************************************
+  // *************************************************************************
 
   // ***************Алгоритм ошибки при загрузки карточек***********************
 
@@ -162,6 +181,7 @@
   };
 
   window.load(window.data.URL_GET, window.onSuccess, window.onError, 'GET');
+
 })();
 
 // *****************************************************************************
@@ -172,11 +192,9 @@
 
   window.handlerSelectChangeTypeData = function (event) {
     window.clearCards();
-
-    var filterСards = (window.limitDataByNumber(window.filterDataByType(event.target.value), 5));
-    window.filteringCards(filterСards);
+    window.updateFilterSettings(event.target);
+    window.filteringCards(window.limitDataByNumber(window.filterDataByType(), 5));
   };
-
   // ***************************************************************************
 
   window.handlerFilterDataByCheck = function (event) {
@@ -247,4 +265,5 @@
     }
 
   };
+
 })();
