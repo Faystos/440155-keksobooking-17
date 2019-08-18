@@ -38,36 +38,42 @@
     window.data.selectTimeIn.selectedIndex = this.selectedIndex;
   };
 
-  var capacityAll = window.data.inputCapacity.querySelectorAll('option');
-  var roomNumber = window.data.inputRoomNumber.querySelectorAll('option');
 
-  if (roomNumber[0].selected) {
-    capacityAll[2].removeAttribute('disabled');
-    capacityAll[2].selected = true;
-  }
+
+  var inputCapacity = document.querySelector('#capacity');
+
+  var validRoomInput = function (event) {
+    if (event.target.value === '1') {
+      inputCapacity[2].selected = true;
+      inputCapacity[0].disabled = true;
+      inputCapacity[1].disabled = true;
+      inputCapacity[2].disabled = false;
+      inputCapacity[3].disabled = true;
+    } else if (event.target.value === '2') {
+      inputCapacity[2].selected = true;
+      inputCapacity[0].disabled = true;
+      inputCapacity[1].disabled = false;
+      inputCapacity[2].disabled = false;
+      inputCapacity[3].disabled = true;
+    }  else if (event.target.value === '3') {
+      inputCapacity[2].selected = true;
+      inputCapacity[0].disabled = false;
+      inputCapacity[1].disabled = false;
+      inputCapacity[2].disabled = false;
+      inputCapacity[3].disabled = true;
+    } else if (event.target.value === '100') {
+      inputCapacity[3].selected = true;
+      inputCapacity[0].disabled = true;
+      inputCapacity[1].disabled = true;
+      inputCapacity[2].disabled = true;
+      inputCapacity[3].disabled = false;
+    }
+
+  };
 
   window.data.inputRoomNumber.addEventListener('change', validRoomInput);
 
-  var validRoomInput = function () {
-    if (roomNumber[1].selected) {
-      capacityAll[1].selected = true;
-      capacityAll[2].removeAttribute('disabled');
-      capacityAll[1].removeAttribute('disabled');
-    }
-    if (roomNumber[2].selected) {
-      capacityAll[0].removeAttribute('disabled');
-      capacityAll[1].removeAttribute('disabled');
-      capacityAll[2].removeAttribute('disabled');
-      capacityAll[0].selected = true;
-    }
-    if (roomNumber[3].selected) {
-      capacityAll[3].removeAttribute('disabled');
-      capacityAll[0].setAttribute('disabled', 'true');
-      capacityAll[1].setAttribute('disabled', 'true');
-      capacityAll[2].setAttribute('disabled', 'true');
-      capacityAll[3].selected = true;
-    }
-  };
+
 
 
   var buttonForm = document.querySelector('.ad-form__submit');
