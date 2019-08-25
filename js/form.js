@@ -38,8 +38,6 @@
     window.data.selectTimeIn.selectedIndex = this.selectedIndex;
   };
 
-
-
   var inputCapacity = document.querySelector('#capacity');
 
   var validRoomInput = function (event) {
@@ -55,7 +53,7 @@
       inputCapacity[1].disabled = false;
       inputCapacity[2].disabled = false;
       inputCapacity[3].disabled = true;
-    }  else if (event.target.value === '3') {
+    } else if (event.target.value === '3') {
       inputCapacity[2].selected = true;
       inputCapacity[0].disabled = false;
       inputCapacity[1].disabled = false;
@@ -72,9 +70,6 @@
   };
 
   window.data.inputRoomNumber.addEventListener('change', validRoomInput);
-
-
-
 
   var buttonForm = document.querySelector('.ad-form__submit');
   var resetButton = document.querySelector('.ad-form__reset');
